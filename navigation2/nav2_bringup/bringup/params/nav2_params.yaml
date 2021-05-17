@@ -37,7 +37,7 @@ amcl:
     z_max: 0.05
     z_rand: 0.5
     z_short: 0.05
-    scan_topic: /demo/laser/out
+    scan_topic: /demo/laser_scan
 
 amcl_map_client:
   ros__parameters:
@@ -50,9 +50,9 @@ amcl_rclcpp_node:
 bt_navigator:
   ros__parameters:
     use_sim_time: True
-    global_frame: map
+    global_frame: map #map
     robot_base_frame: base_link
-    odom_topic: /demo/odom
+    odom_topic: /odometry/filtered
     enable_groot_monitoring: True
     groot_zmq_publisher_port: 1666
     groot_zmq_server_port: 1667
@@ -183,7 +183,7 @@ local_costmap:
         mark_threshold: 0
         observation_sources: scan
         scan:
-          topic: /demo/laser/out
+          topic: /demo/laser_scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True
@@ -203,7 +203,7 @@ global_costmap:
     ros__parameters:
       update_frequency: 1.0
       publish_frequency: 1.0
-      global_frame: map
+      global_frame: map #prima map
       robot_base_frame: base_link
       use_sim_time: True
       robot_radius: 0.22
@@ -215,7 +215,7 @@ global_costmap:
         enabled: True
         observation_sources: scan
         scan:
-          topic: /demo/laser/out
+          topic: /demo/laser_scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True

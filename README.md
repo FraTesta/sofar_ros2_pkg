@@ -74,33 +74,22 @@ sudo apt install --no-install-recommends -y \
 3.  in another shell type < rviz2 > and load the configuration or create a new one.
 
 # Nav2 installation
-1. install
-   ```
-   sudo apt install ros-foxy-navigation2 ros-foxy-nav2-bringup
-   cd /ros2_slam
-   colcon build
-   ```
-2. Source the workspace: 
-   ``` 
-   . install/local_setup.bash
-   ```
    ## Run 
    1. launch the ortopillar simulation:
    ```
    ros2 launch sam_bot_description display.launch.py
    ```
-   In Rviz, correct the path of the robotModel by opening the model.urdf file.
 
-   2. In another __sourced__ terminal launch the navigation node:
+   1. In another __sourced__ (. install/setup.bash) terminal launch the navigation node:
    ```
    ros2 launch nav2_bringup navigation_launch.py
    ```
-   3. In the final terminal (__sourced__) launch the slam:
+   1. In the final terminal (__sourced__) launch the slam:
    ```
    ros2 launch slam_toolbox online_async_launch.py
    ```
-   4. In Rviz you should be able to add the cost_map (local and global), the path ....
-   5. Finally in another terminal you can give a goal position to the robot using the nav2 action server:
+   1. In Rviz you should be able to add the cost_map (local and global), the path ....
+   2. Finally in another terminal you can give a goal position to the robot using the nav2 action server:
    ```
    ros2 topic pub /goal_pose geometry_msgs/PoseStamped "{header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}"
    ```
