@@ -87,7 +87,7 @@ sudo apt install --no-install-recommends -y \
    ## Run 
    1. launch the ortopillar simulation:
    ```
-   ros2 launch orthopillar_robot_spawner_pkg gazebo_world.launch.py
+   ros2 launch sam_bot_description display.launch.py
    ```
    In Rviz, correct the path of the robotModel by opening the model.urdf file.
 
@@ -105,15 +105,4 @@ sudo apt install --no-install-recommends -y \
    ros2 topic pub /goal_pose geometry_msgs/PoseStamped "{header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}"
    ```
 
-# Packages to install :
 
-```
-sudo apt-get install -y python3-rosgraph
-
-```
-
-
-```
-sudo apt install ros-foxy-robot-localization
-
-```
