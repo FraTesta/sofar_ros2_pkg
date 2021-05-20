@@ -40,6 +40,11 @@ def generate_launch_description():
          output='screen',
          parameters=[os.path.join(pkg_share, 'config/ekf.yaml'), {'use_sim_time': LaunchConfiguration('use_sim_time')}]
     )
+    joint_state_publisher_gui_node = launch_ros.actions.Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
+        name='joint_state_publisher_gui',
+        condition=launch.conditions.IfCondition(LaunchConfiguration('gui'))
 
 
     
@@ -56,7 +61,7 @@ def generate_launch_description():
 
         joint_state_publisher_node,
         robot_state_publisher_node,
+        joint_state_publisher_gui_node,
         spawn_entity,
-        robot_localization_node,
         rviz_node
     ])

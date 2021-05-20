@@ -79,19 +79,27 @@ sudo apt install --no-install-recommends -y \
    ```
    ros2 launch sam_bot_description display.launch.py
    ```
+   2. **Add some obstacles in the environment from Gazebo.**
 
-   1. In another __sourced__ (. install/setup.bash) terminal launch the navigation node:
+   3. In another __sourced__ (. install/setup.bash) terminal launch the navigation node:
    ```
    ros2 launch nav2_bringup navigation_launch.py
    ```
-   1. In the final terminal (__sourced__) launch the slam:
+   4. In the final terminal (__sourced__) launch the slam:
    ```
    ros2 launch slam_toolbox online_async_launch.py
    ```
-   1. In Rviz you should be able to add the cost_map (local and global), the path ....
-   2. Finally in another terminal you can give a goal position to the robot using the nav2 action server:
+   5. In Rviz you should be able to add the cost_map (local and global), the path ....
+   6. Finally in another terminal you can give a goal position to the robot using the nav2 action server:
    ```
    ros2 topic pub /goal_pose geometry_msgs/PoseStamped "{header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}"
    ```
+
+# Comandi Utili
+```
+ros2 run tf2_ros tf2_echo <frame1> <frame2>  # per vedere le pubblicazioni tra frame
+ros2 run tf2_tools view_frames.py    # per generare l'albero dei frame 
+ros2 run topic pub /demo/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"   # per muovere il robot 
+```
 
 
