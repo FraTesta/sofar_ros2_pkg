@@ -1,61 +1,28 @@
 amcl:
   ros__parameters:
-    use_sim_time: True
-    alpha1: 0.2
+    alpha1: 0.3
     alpha2: 0.2
-    alpha3: 0.2
+    alpha3: 0.1
     alpha4: 0.2
-    alpha5: 0.2
-    base_frame_id: "base_footprint"
-    beam_skip_distance: 0.5
-    beam_skip_error_threshold: 0.9
-    beam_skip_threshold: 0.3
-    do_beamskip: false
+    base_frame_id: "base_link"
     global_frame_id: "map"
-    lambda_short: 0.1
-    laser_likelihood_max_dist: 2.0
-    laser_max_range: 100.0
-    laser_min_range: -1.0
     laser_model_type: "likelihood_field"
-    max_beams: 60
+    max_beams: 100
     max_particles: 2000
     min_particles: 500
     odom_frame_id: "odom"
-    pf_err: 0.05
-    pf_z: 0.99
-    recovery_alpha_fast: 0.0
-    recovery_alpha_slow: 0.0
-    resample_interval: 1
     robot_model_type: "differential"
-    save_pose_rate: 0.5
-    sigma_hit: 0.2
     tf_broadcast: true
-    transform_tolerance: 1.0
-    update_min_a: 0.2
-    update_min_d: 0.25
-    z_hit: 0.5
+    z_hit: 0.9
     z_max: 0.05
-    z_rand: 0.5
+    z_rand: 0.1
     z_short: 0.05
-    scan_topic: /demo/laser_scan
-
-amcl_map_client:
-  ros__parameters:
-    use_sim_time: True
-
-amcl_rclcpp_node:
-  ros__parameters:
-    use_sim_time: True
 
 bt_navigator:
   ros__parameters:
-    use_sim_time: True
-    global_frame: map #map
+    global_frame: map
     robot_base_frame: base_link
     odom_topic: /odometry/filtered
-    enable_groot_monitoring: True
-    groot_zmq_publisher_port: 1666
-    groot_zmq_server_port: 1667
     default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
     plugin_lib_names:
     - nav2_compute_path_to_pose_action_bt_node
@@ -72,8 +39,8 @@ bt_navigator:
     - nav2_rate_controller_bt_node
     - nav2_distance_controller_bt_node
     - nav2_speed_controller_bt_node
-    - nav2_truncate_path_action_bt_node
-    - nav2_goal_updater_node_bt_node
+#    - nav2_truncate_path_action_bt_node
+#    - nav2_goal_updater_node_bt_node
     - nav2_recovery_node_bt_node
     - nav2_pipeline_sequence_bt_node
     - nav2_round_robin_node_bt_node
@@ -81,13 +48,8 @@ bt_navigator:
     - nav2_time_expired_condition_bt_node
     - nav2_distance_traveled_condition_bt_node
 
-bt_navigator_rclcpp_node:
-  ros__parameters:
-    use_sim_time: True
-
 controller_server:
   ros__parameters:
-    use_sim_time: True
     controller_frequency: 20.0
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
@@ -104,55 +66,22 @@ controller_server:
     # Goal checker parameters
     goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.125
       yaw_goal_tolerance: 0.25
       stateful: True
     # DWB parameters
     FollowPath:
-      plugin: "dwb_core::DWBLocalPlanner"
-      debug_trajectory_details: True
-      min_vel_x: 0.0
-      min_vel_y: 0.0
-      max_vel_x: 0.26
-      max_vel_y: 0.0
-      max_vel_theta: 1.0
-      min_speed_xy: 0.0
-      max_speed_xy: 0.26
-      min_speed_theta: 0.0
-      # Add high threshold velocity for turtlebot 3 issue.
-      # https://github.com/ROBOTIS-GIT/turtlebot3_simulations/issues/75
-      acc_lim_x: 2.5
-      acc_lim_y: 0.0
-      acc_lim_theta: 3.2
-      decel_lim_x: -2.5
-      decel_lim_y: 0.0
-      decel_lim_theta: -3.2
-      vx_samples: 20
-      vy_samples: 5
-      vtheta_samples: 20
-      sim_time: 1.7
-      linear_granularity: 0.05
-      angular_granularity: 0.025
-      transform_tolerance: 0.2
-      xy_goal_tolerance: 0.25
-      trans_stopped_velocity: 0.25
-      short_circuit_trajectory_evaluation: True
-      stateful: True
-      critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
-      BaseObstacle.scale: 0.02
-      PathAlign.scale: 32.0
-      PathAlign.forward_point_distance: 0.1
-      GoalAlign.scale: 24.0
-      GoalAlign.forward_point_distance: 0.1
-      PathDist.scale: 32.0
-      GoalDist.scale: 24.0
-      RotateToGoal.scale: 32.0
-      RotateToGoal.slowing_factor: 5.0
-      RotateToGoal.lookahead_time: -1.0
-
-controller_server_rclcpp_node:
-  ros__parameters:
-    use_sim_time: True
+      plugin: "graceful_controller/GracefulControllerROS"
+      min_vel_x: 0.1
+      max_vel_x: 1.0
+      min_vel_theta: 0.3
+      max_vel_theta: 2.8
+      min_in_place_vel_theta: 0.6
+      acc_lim_x: 0.5
+      acc_lim_theta: 1.0
+      xy_goal_tolerance: 0.05
+      max_lookahead: 1.25
+      initial_rotate_tolerance: 0.25
 
 local_costmap:
   local_costmap:
@@ -161,97 +90,76 @@ local_costmap:
       publish_frequency: 2.0
       global_frame: odom
       robot_base_frame: base_link
-      use_sim_time: True
       rolling_window: true
       width: 3
       height: 3
       resolution: 0.05
-      robot_radius: 0.22
-      plugins: ["voxel_layer", "inflation_layer"]
+      robot_radius: 0.275
+      footprint_padding: 0.025
+      plugins: ["depth_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 0.55
-      voxel_layer:
+        cost_scaling_factor: 10.0
+        inflation_radius: 0.75
+      depth_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
+        publish_observations: True
         enabled: True
         publish_voxel_map: True
         origin_z: 0.0
-        z_resolution: 0.05
+        z_resolution: 0.125
         z_voxels: 16
+        min_obstacle_height: 0.0
         max_obstacle_height: 2.0
+        obstacle_range: 3.0
+        raytrace_range: 4.0
         mark_threshold: 0
-        observation_sources: scan
-        scan:
+        observation_sources: base_scan
+        base_scan:
           topic: /demo/laser_scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True
           data_type: "LaserScan"
-      static_layer:
-        map_subscribe_transient_local: True
       always_send_full_costmap: True
-  local_costmap_client:
-    ros__parameters:
-      use_sim_time: True
-  local_costmap_rclcpp_node:
-    ros__parameters:
-      use_sim_time: True
 
 global_costmap:
   global_costmap:
     ros__parameters:
       update_frequency: 1.0
       publish_frequency: 1.0
-      global_frame: map #prima map
+      global_frame: map
       robot_base_frame: base_link
-      use_sim_time: True
-      robot_radius: 0.22
+      robot_radius: 0.275
+      footprint_padding: 0.025
       resolution: 0.05
-      track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
         observation_sources: scan
         scan:
-          topic: /demo/laser_scan
+          topic: /base_scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True
           data_type: "LaserScan"
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
-        map_subscribe_transient_local: True
+#       map_subscribe_transient_local: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 0.55
+        cost_scaling_factor: 10.0
+        inflation_radius: 0.75
       always_send_full_costmap: True
-  global_costmap_client:
-    ros__parameters:
-      use_sim_time: True
-  global_costmap_rclcpp_node:
-    ros__parameters:
-      use_sim_time: True
 
 map_server:
   ros__parameters:
-    use_sim_time: True
-    yaml_filename: "turtlebot3_world.yaml"
-
-map_saver:
-  ros__parameters:
-    use_sim_time: True
-    save_map_timeout: 5000
-    free_thresh_default: 0.25
-    occupied_thresh_default: 0.65
-    map_subscribe_transient_local: False
+    yaml_filename: "map.yaml"
 
 planner_server:
   ros__parameters:
     expected_planner_frequency: 20.0
-    use_sim_time: True
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"
@@ -259,31 +167,20 @@ planner_server:
       use_astar: false
       allow_unknown: true
 
-planner_server_rclcpp_node:
-  ros__parameters:
-    use_sim_time: True
-
 recoveries_server:
   ros__parameters:
     costmap_topic: local_costmap/costmap_raw
     footprint_topic: local_costmap/published_footprint
     cycle_frequency: 10.0
-    recovery_plugins: ["spin", "back_up", "wait"]
+    recovery_plugins: ["spin", "wait"]
     spin:
       plugin: "nav2_recoveries/Spin"
-    back_up:
-      plugin: "nav2_recoveries/BackUp"
     wait:
       plugin: "nav2_recoveries/Wait"
     global_frame: odom
     robot_base_frame: base_link
     transform_timeout: 0.1
-    use_sim_time: true
     simulate_ahead_time: 2.0
     max_rotational_vel: 1.0
     min_rotational_vel: 0.4
     rotational_acc_lim: 3.2
-
-robot_state_publisher:
-  ros__parameters:
-    use_sim_time: True

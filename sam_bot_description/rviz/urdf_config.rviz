@@ -9,8 +9,11 @@ Panels:
         - /TF1
         - /LaserScan1
         - /LaserScan1/Topic1
+        - /Map1
+        - /Map1/Status1
+        - /Map1/Topic1
       Splitter Ratio: 0.5
-    Tree Height: 302
+    Tree Height: 319
 Visualization Manager:
   Class: ""
   Displays:
@@ -108,6 +111,8 @@ Visualization Manager:
           Value: true
         laser_link:
           Value: true
+        map:
+          Value: true
         odom:
           Value: true
       Marker Scale: 0.30000001192092896
@@ -116,6 +121,8 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
+        map:
+          {}
         odom:
           base_link:
             base_footprint:
@@ -165,6 +172,26 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic:
+        Depth: 5
+        Durability Policy: Transient Local
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map_updates
+      Use Timestamp: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -186,33 +213,33 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 10
+      Distance: 1.4155867099761963
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: 0.6981424689292908
+        Y: 1.2377009391784668
+        Z: -0.11630204319953918
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7853981852531433
+      Pitch: 0.4103982150554657
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.7853981852531433
+      Yaw: 1.3453978300094604
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 531
+  Height: 548
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd000000010000000000000156000001b9fc0200000001fb000000100044006900730070006c006100790073010000003d000001b9000000c900ffffff00000160000001b900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
-  Width: 700
+  QMainWindow State: 000000ff00000000fd0000000100000000000001df000001cafc0200000001fb000000100044006900730070006c006100790073010000003d000001ca000000c900ffffff000002b6000001ca00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Width: 1179
   X: 72
   Y: 27

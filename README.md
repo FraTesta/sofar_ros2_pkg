@@ -49,6 +49,7 @@ sudo apt install --no-install-recommends -y \
 
 # ROS2_ortopillar_packages
 
+
 1. clone this pkgs into your ros 2 workspace
 
 2. Copy the folder *meshes* in orthopillar_robot_spawner_pkg/model/orto_meshes into a new folder called *orthopillar* to be placed in /.gazebo/models 
@@ -74,6 +75,10 @@ sudo apt install --no-install-recommends -y \
 3.  in another shell type < rviz2 > and load the configuration or create a new one.
 
 # Nav2 installation
+  Install the slam toolbox package
+  ```
+  sudo apt-get install ros-foxy-slam-toolbox
+  ```
    ## Run 
    1. launch the ortopillar simulation:
    ```
@@ -87,7 +92,7 @@ sudo apt install --no-install-recommends -y \
    ```
    4. In the final terminal (__sourced__) launch the slam:
    ```
-   ros2 launch slam_toolbox online_async_launch.py
+   ros2 launch orto_nav slam.launch.py
    ```
    5. In Rviz you should be able to add the cost_map (local and global), the path ....
    6. Finally in another terminal you can give a goal position to the robot using the nav2 action server:
@@ -101,5 +106,9 @@ ros2 run tf2_ros tf2_echo <frame1> <frame2>  # per vedere le pubblicazioni tra f
 ros2 run tf2_tools view_frames.py    # per generare l'albero dei frame 
 ros2 run topic pub /demo/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"   # per muovere il robot 
 ```
-
+# Problems
+```
+[rviz2-5] [ERROR] [1621514855.514780670] [rviz2]: Vertex Program:rviz/glsl120/indexed_8bit_image.vert Fragment Program:rviz/glsl120/indexed_8bit_image.frag GLSL link result : 
+[rviz2-5] active samplers with a different type refer to the same texture image unit
+```
 
