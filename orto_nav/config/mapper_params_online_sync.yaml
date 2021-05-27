@@ -16,7 +16,7 @@ slam_toolbox:
     scan_topic: /demo/laser_scan
     mode: mapping
 
-    debug_logging: false
+    debug_logging: true
     throttle_scans: 1
     transform_publish_period: 0.02 #if 0 never publishes odometry
     map_update_interval: 5.0

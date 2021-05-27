@@ -13,7 +13,7 @@ def generate_launch_description():
 
     declare_use_sim_time_argument = DeclareLaunchArgument(
         'use_sim_time',
-        default_value='false',
+        default_value='True',
         description='Use simulation/Gazebo clock')
 
     start_sync_slam_toolbox_node =Node(

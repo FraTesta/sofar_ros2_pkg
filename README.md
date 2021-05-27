@@ -86,16 +86,25 @@ sudo apt install --no-install-recommends -y \
    ```
    2. **Add some obstacles in the environment from Gazebo.**
 
-   3. In another __sourced__ (. install/setup.bash) terminal launch the navigation node:
-   ```
-   ros2 launch nav2_bringup navigation_launch.py
-   ```
-   4. In the final terminal (__sourced__) launch the slam:
+   3. In another __sourced__ (. install/setup.bash) terminal launch the slam node:
    ```
    ros2 launch orto_nav slam.launch.py
    ```
-   5. In Rviz you should be able to add the cost_map (local and global), the path ....
-   6. Finally in another terminal you can give a goal position to the robot using the nav2 action server:
+   4. In the final terminal (__sourced__) launch the teleop in order to drive the robot and build the whole map :
+   ```
+   ros2 run teleop_twist_keyboard teleop_twist_keyboard
+   ```
+   5. Save the map (il primo comando la salva nella WS con il secondo dovrebbe salvarla in nav2_bringup)
+  ```
+   ros2 run nav2_map_server map_saver_cli -f map
+   ros2 run nav2_map_server map_saver_cli -f /home/francescotesta/prove_ws/src/navigation2/nav2_bringup/bringup/maps/map
+   ```
+   
+   6. Launch the navigation node keeping the robot and slam nodes active (non so se serve ribuildare la WS di navigation2 per aggiornare la mappa)
+   ```
+   ros2 launch nav2_bringup navigation_launch.py
+   ```
+   7. Finally in another terminal you can give a goal position to the robot using the nav2 action server (Non va ancora però riceve i goal msg, riprovare con una mappa completa):
    ```
    ros2 topic pub /goal_pose geometry_msgs/PoseStamped "{header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}"
    ```
