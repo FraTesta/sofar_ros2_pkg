@@ -5,7 +5,7 @@ import os
 from launch.actions import ExecuteProcess
 
 def generate_launch_description():
-    world_file_name = 'prova.world'
+    world_file_name = 'room.world'
 
     pkg_share = launch_ros.substitutions.FindPackageShare(package='sam_bot_description').find('sam_bot_description')
     default_model_path = os.path.join(pkg_share, 'src/description/sam_bot_description.urdf')
