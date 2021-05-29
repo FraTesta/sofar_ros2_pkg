@@ -1,0 +1,56 @@
+[1.218s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'list', '-p', '--base-paths', '/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg']
+[1.218s] DEBUG:colcon:Parsed command line arguments: Namespace(base_paths=['/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg'], build_base='build', ignore_user_meta=False, log_base=None, log_level=None, main=<bound method ListVerb.main of <colcon_package_information.verb.list.ListVerb object at 0x7f8fd7d900a0>>, metas=['./colcon.meta'], names_only=False, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, paths=None, paths_only=True, topological_graph=False, topological_graph_density=False, topological_graph_dot=False, topological_graph_dot_cluster=False, topological_graph_dot_include_skipped=False, topological_graph_legend=False, topological_order=False, verb_extension=<colcon_package_information.verb.list.ListVerb object at 0x7f8fd7d900a0>, verb_name='list', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f8fd7c85640>)
+[1.327s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.327s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.328s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.328s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.328s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.328s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg'
+[1.329s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extensions ['ignore', 'ignore_ament_install']
+[1.329s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extension 'ignore'
+[1.329s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extension 'ignore_ament_install'
+[1.329s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extensions ['colcon_pkg']
+[1.329s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extension 'colcon_pkg'
+[1.329s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extensions ['colcon_meta']
+[1.329s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extension 'colcon_meta'
+[1.330s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extensions ['ros']
+[1.330s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extension 'ros'
+[1.373s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extensions ['cmake', 'python']
+[1.373s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extension 'cmake'
+[1.373s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extension 'python'
+[1.374s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extensions ['python_setup_py']
+[1.374s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg) by extension 'python_setup_py'
+[1.374s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/log) by extensions ['ignore', 'ignore_ament_install']
+[1.374s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/log) by extension 'ignore'
+[1.375s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/log) ignored
+[1.375s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/orto_nav) by extensions ['ignore', 'ignore_ament_install']
+[1.375s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/orto_nav) by extension 'ignore'
+[1.375s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/orto_nav) by extension 'ignore_ament_install'
+[1.375s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/orto_nav) by extensions ['colcon_pkg']
+[1.376s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/orto_nav) by extension 'colcon_pkg'
+[1.376s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/orto_nav) by extensions ['colcon_meta']
+[1.376s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/orto_nav) by extension 'colcon_meta'
+[1.376s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/orto_nav) by extensions ['ros']
+[1.376s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/orto_nav) by extension 'ros'
+[1.382s] DEBUG:colcon.colcon_core.package_identification:Package '/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/orto_nav' with type 'ros.ament_cmake' and name 'orto_nav'
+[1.383s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/sam_bot_description) by extensions ['ignore', 'ignore_ament_install']
+[1.383s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/sam_bot_description) by extension 'ignore'
+[1.383s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/sam_bot_description) by extension 'ignore_ament_install'
+[1.383s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/sam_bot_description) by extensions ['colcon_pkg']
+[1.383s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/sam_bot_description) by extension 'colcon_pkg'
+[1.383s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/sam_bot_description) by extensions ['colcon_meta']
+[1.383s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/sam_bot_description) by extension 'colcon_meta'
+[1.383s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/sam_bot_description) by extensions ['ros']
+[1.383s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/sam_bot_description) by extension 'ros'
+[1.385s] DEBUG:colcon.colcon_core.package_identification:Package '/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/sam_bot_description' with type 'ros.ament_cmake' and name 'sam_bot_description'
+[1.385s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/teleop_twist_keyboard) by extensions ['ignore', 'ignore_ament_install']
+[1.385s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/teleop_twist_keyboard) by extension 'ignore'
+[1.385s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/teleop_twist_keyboard) by extension 'ignore_ament_install'
+[1.386s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/teleop_twist_keyboard) by extensions ['colcon_pkg']
+[1.386s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/teleop_twist_keyboard) by extension 'colcon_pkg'
+[1.386s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/teleop_twist_keyboard) by extensions ['colcon_meta']
+[1.386s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/teleop_twist_keyboard) by extension 'colcon_meta'
+[1.386s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/teleop_twist_keyboard) by extensions ['ros']
+[1.386s] Level 1:colcon.colcon_core.package_identification:_identify(/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/teleop_twist_keyboard) by extension 'ros'
+[1.387s] DEBUG:colcon.colcon_core.package_identification:Package '/home/luca/Desktop/sofar_ws/src/sofar_ros2_pkg/teleop_twist_keyboard' with type 'ros.ament_python' and name 'teleop_twist_keyboard'
+[1.387s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
