@@ -1,10 +1,14 @@
 <?xml version="1.0"?>
-<robot name="sam_bot" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="sam_bot"
+  xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- Define robot constants -->
   <xacro:property name="base_width" value="0.31"/>
+  <!--0.31-->
   <xacro:property name="base_length" value="0.42"/>
+  <!--0.42-->
   <xacro:property name="base_height" value="0.18"/>
+  <!--0.18-->
 
   <xacro:property name="wheel_radius" value="0.10"/>
   <xacro:property name="wheel_width" value="0.04"/>
@@ -12,12 +16,13 @@
   <xacro:property name="wheel_zoff" value="0.05"/>
   <xacro:property name="wheel_xoff" value="0.12"/>
 
-  <xacro:property name="caster_xoff" value="0.14"/>
+  <xacro:property name="caster_xoff" value="0.2"/>
+  <!--0.14-->
 
   <!-- Define some commonly used intertial properties  -->
   <xacro:macro name="box_inertia" params="m w h d">
     <inertial>
-      <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>      
+      <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>
       <mass value="${m}"/>
       <inertia ixx="${(m/12) * (h*h + d*d)}" ixy="0.0" ixz="0.0" iyy="${(m/12) * (w*w + d*d)}" iyz="0.0" izz="${(m/12) * (w*w + h*h)}"/>
     </inertial>
@@ -25,9 +30,9 @@
 
   <xacro:macro name="cylinder_inertia" params="m r h">
     <inertial>
-      <origin xyz="0 0 0" rpy="${pi/2} 0 0" />      
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
       <mass value="${m}"/>
-      <inertia ixx="${(m/12) * (3*r*r + h*h)}" ixy = "0" ixz = "0" iyy="${(m/12) * (3*r*r + h*h)}" iyz = "0" izz="${(m/2) * (r*r)}"/> 
+      <inertia ixx="${(m/12) * (3*r*r + h*h)}" ixy = "0" ixz = "0" iyy="${(m/12) * (3*r*r + h*h)}" iyz = "0" izz="${(m/2) * (r*r)}"/>
     </inertial>
   </xacro:macro>
 
@@ -37,7 +42,7 @@
       <inertia ixx="${(2/5) * m * (r*r)}" ixy="0.0" ixz="0.0" iyy="${(2/5) * m * (r*r)}" iyz="0.0" izz="${(2/5) * m * (r*r)}"/>
     </inertial>
   </xacro:macro>
-  
+
   <!-- Robot Base -->
   <link name="base_link">
     <visual>
@@ -58,9 +63,9 @@
     <xacro:box_inertia m="15" w="${base_width}" d="${base_length}" h="${base_height}"/>
   </link>
 
- <!-- Robot Footprint -->
+  <!-- Robot Footprint -->
   <link name="base_footprint">
-  	<xacro:box_inertia m="0" w="0" d="0" h="0"/>
+    <xacro:box_inertia m="0" w="0" d="0" h="0"/>
   </link>
 
   <joint name="base_joint" type="fixed">
@@ -75,7 +80,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
         <geometry>
-            <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
         </geometry>
         <material name="Gray">
           <color rgba="0.5 0.5 0.5 1.0"/>
@@ -135,22 +140,22 @@
         <box size="0.1 0.1 0.1"/>
       </geometry>
     </visual>
-    
+
     <collision>
       <geometry>
         <box size="0.1 0.1 0.1"/>
       </geometry>
     </collision>
-      
+
     <xacro:box_inertia m="0.1" w="0.1" d="0.1" h="0.1"/>
   </link>
-    
+
   <joint name="imu_joint" type="fixed">
     <parent link="base_link"/>
     <child link="imu_link"/>
     <origin xyz="0 0 0.01"/>
   </joint>
-    
+
   <gazebo reference="imu_link">
     <sensor name="imu_sensor" type="imu">
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
@@ -163,10 +168,10 @@
       <always_on>true</always_on>
       <update_rate>100</update_rate>
       <visualize>true</visualize>
-     <imu>
-     	<angular_velocity>
-     	  <x>
-     	    <noise type="gaussian">
+      <imu>
+        <angular_velocity>
+          <x>
+            <noise type="gaussian">
               <mean>0.0</mean>
               <stddev>2e-4</stddev>
               <bias_mean>0.0000075</bias_mean>
@@ -224,9 +229,9 @@
     <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
       <ros>
         <namespace>/demo</namespace>
-        
+
       </ros>
-        
+
       <!-- wheels -->
       <left_joint>drivewhl_l_joint</left_joint>
       <right_joint>drivewhl_r_joint</right_joint>
@@ -235,7 +240,7 @@
       <wheel_separation>0.025</wheel_separation>
       <wheel_diameter>0.2</wheel_diameter>
 
-      <!-- limits -->	
+      <!-- limits -->
       <max_wheel_torque>20</max_wheel_torque>
       <max_wheel_acceleration>1.0</max_wheel_acceleration>
 
@@ -247,11 +252,11 @@
       <odometry_frame>odom</odometry_frame>
       <robot_base_frame>base_link</robot_base_frame>
     </plugin>
-     
+
   </gazebo>
   <!-- ____________________________________________Laser___________________________________________________________________-->
-  
-   <link name="laser_link">
+
+  <link name="laser_link">
     <inertial>
       <mass value="0.1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>
@@ -263,14 +268,14 @@
         <box size="0.05 0.05 0.041"/>
       </geometry>
     </collision>
-     <visual name="visual-base">
+    <visual name="visual-base">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <box size="0.05 0.05 0.041"/>
       </geometry>
     </visual>
     <collision name="collision-top">
-       <origin rpy="0  0  0" xyz="0  0  0.035"/>
+      <origin rpy="0  0  0" xyz="0  0  0.035"/>
       <geometry>
         <cylinder length="0.029" radius="0.021"/>
       </geometry>
@@ -278,53 +283,53 @@
     <visual name="visual-top">
       <origin rpy="0  0  0" xyz="0  0  0.035"/>
       <geometry>
-         <cylinder length="0.029" radius="0.021"/>
+        <cylinder length="0.029" radius="0.021"/>
       </geometry>
     </visual>
-	 
-	 
+
+
   </link>
- 
-<joint name="laser_joint" type="fixed">
+
+  <joint name="laser_joint" type="fixed">
     <parent link="base_link"/>
     <child link="laser_link"/>
     <origin rpy="0  0  0" xyz="0.16  0    0.12"/>
     <axis xyz="0  0  0"/>
-    
-  </joint>
- 
- <gazebo reference="laser_link">
-  <sensor name="laser" type="ray">
-           <ray>
-             <scan>
-               <horizontal>
-                 <samples>181</samples>
-                 <resolution>1</resolution>
-                 <!-- <min_angle>-1.57080</min_angle> -->
-                 <min_angle>-1.04</min_angle>
-                 <max_angle>1.04</max_angle>
-               </horizontal>
-             </scan>
-             <range>
-               <min>0.08</min>
-               <max>10</max>
-               <resolution>0.05</resolution>
-             </range>
-           </ray>
-           <always_on>1</always_on>
-           <update_rate>10</update_rate>
-           <visualize>true</visualize>
 
-           <plugin name='laser' filename='libgazebo_ros_ray_sensor.so'>
-             <ros>
-               <namespace>/demo</namespace>
-               <!-- tolto il remapping originale -->
-               <remapping>~/out:=laser_scan</remapping>
-             </ros>
-             <output_type>sensor_msgs/LaserScan</output_type>
-           </plugin>
-	 </sensor>
-	 </gazebo>
-         
-  
+  </joint>
+
+  <gazebo reference="laser_link">
+    <sensor name="laser" type="ray">
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>181</samples>
+            <resolution>1</resolution>
+            <!-- <min_angle>-1.57080</min_angle> -->
+            <min_angle>-1.04</min_angle>
+            <max_angle>1.04</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.08</min>
+          <max>10</max>
+          <resolution>0.05</resolution>
+        </range>
+      </ray>
+      <always_on>1</always_on>
+      <update_rate>10</update_rate>
+      <visualize>true</visualize>
+
+      <plugin name='laser' filename='libgazebo_ros_ray_sensor.so'>
+        <ros>
+          <namespace>/demo</namespace>
+          <!-- tolto il remapping originale -->
+          <remapping>~/out:=laser_scan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+
 </robot>
