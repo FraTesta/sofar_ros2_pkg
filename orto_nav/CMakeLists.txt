@@ -45,7 +45,7 @@ if(BUILD_TESTING)
 endif()
 
 install(
-  DIRECTORY config launch maps rviz urdf worlds behavior_trees
+  DIRECTORY config launch maps rviz urdf worlds behavior_trees models
   DESTINATION share/${PROJECT_NAME}/
 )
 

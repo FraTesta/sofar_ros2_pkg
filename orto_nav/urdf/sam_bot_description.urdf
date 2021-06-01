@@ -1,59 +1,31 @@
 <?xml version="1.0"?>
-<robot name="sam_bot"
+<robot name="orthopillar"
   xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- _________________________________________________________Color_________________________________________________________-->
 
-  <!-- Define robot constants -->
-  <!-- <xacro:property name="base_width" value="0.31"/> -->
+  <material name="Cyan">
+    <color rgba="0 1.0 1.0 1.0"/>
+  </material>
 
-  <!-- <xacro:property name="base_length" value="0.42"/> -->
+  <material name="Gray">
+    <color rgba="0.5 0.5 0.5 1.0"/>
+  </material>
 
-  <!-- <xacro:property name="base_height" value="0.18"/> -->
+  <!-- _________________________________________________________Robot Base_________________________________________________________ -->
+  <link name="base_footprint"/>
 
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 -0.15" rpy="0 0 0"/>
+  </joint>
 
-  <!-- <xacro:property name="wheel_radius" value="0.10"/>
-  <xacro:property name="wheel_width" value="0.04"/>
-  <xacro:property name="wheel_ygap" value="0.025"/>
-  <xacro:property name="wheel_zoff" value="0.05"/>
-  <xacro:property name="wheel_xoff" value="0.12"/> -->
-
-  <!-- <xacro:property name="caster_xoff" value="0.2"/> -->
-  <!--0.14-->
-
-  <!-- Define some commonly used intertial properties 
-  <xacro:macro name="box_inertia" params="m w h d">
-    <inertial>
-      <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>
-      <mass value="${m}"/>
-      <inertia ixx="${(m/12) * (h*h + d*d)}" ixy="0.0" ixz="0.0" iyy="${(m/12) * (w*w + d*d)}" iyz="0.0" izz="${(m/12) * (w*w + h*h)}"/>
-    </inertial>
-  </xacro:macro> 
-
-
-  <xacro:macro name="cylinder_inertia" params="m r h">
-    <inertial>
-      <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
-      <mass value="${m}"/>
-      <inertia ixx="${(m/12) * (3*r*r + h*h)}" ixy = "0" ixz = "0" iyy="${(m/12) * (3*r*r + h*h)}" iyz = "0" izz="${(m/2) * (r*r)}"/>
-    </inertial>
-  </xacro:macro> 
-
-
-  <xacro:macro name="sphere_inertia" params="m r">
-    <inertial>
-      <mass value="${m}"/>
-      <inertia ixx="${(2/5) * m * (r*r)}" ixy="0.0" ixz="0.0" iyy="${(2/5) * m * (r*r)}" iyz="0.0" izz="${(2/5) * m * (r*r)}"/>
-    </inertial>
-  </xacro:macro> -->
-
-  <!-- Robot Base -->
   <link name="base_link">
     <visual>
       <geometry>
         <box size="0.42 0.31 0.18"/>
       </geometry>
-      <material name="Cyan">
-        <color rgba="0 1.0 1.0 1.0"/>
-      </material>
+      <material name="Cyan"/>
     </visual>
 
     <collision>
@@ -67,57 +39,10 @@
       <mass value="15"/>
       <inertia ixx="0.261" ixy="0.0" ixz="0.0" iyy="0.340625" iyz="0.0" izz="0.160625"/>
     </inertial>
-    <!-- <xacro:box_inertia m="15" w="${base_width}" d="${base_length}" h="${base_height}"/> -->
   </link>
 
-  <link name="base_footprint"/>
-    
-  <!-- Robot Footprint 
-  <link name="base_footprint">
-     <xacro:box_inertia m="0" w="0" d="0" h="0"/> 
-    <inertial>
-      <origin xyz="0.0 0.0 0.0" rpy="1.570796 0.0 1.570796"/>
-      <mass value="0.0"/>
-      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
-    </inertial>
-
-  </link> -->
-
-  <joint name="base_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_footprint"/>
-    <origin xyz="0.0 0.0 -0.15" rpy="0 0 0"/>
-  </joint>
-
-  <!-- Wheel left -->
-  <!-- <xacro:macro name="wheel" params="prefix x_reflect y_reflect"> -->
-  <link name="drivewhl_l_link">
-    <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry>
-        <cylinder radius="0.1" length="0.04"/>
-      </geometry>
-      <material name="Gray">
-        <color rgba="0.5 0.5 0.5 1.0"/>
-      </material>
-    </visual>
-
-    <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry>
-        <cylinder radius="0.1" length="0.04"/>
-      </geometry>
-    </collision>
-
-    <inertial>
-      <origin xyz="0.0 0.0 0.0" rpy="1.570796 0.0 0.0"/>
-      <mass value="0.5"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.0025"/>
-    </inertial>
-
-    <!-- <xacro:cylinder_inertia m="0.5" r="${wheel_radius}" h="${wheel_width}"/> -->
-  </link>
-
+  <!-- _________________________________________________________Wheel left_________________________________________________________ -->
+  
   <joint name="drivewhl_l_joint" type="continuous">
     <parent link="base_link"/>
     <child link="drivewhl_l_link"/>
@@ -125,17 +50,13 @@
     <axis xyz="0 1 0"/>
   </joint>
 
-  <!-- Wheel right -->
-  <!-- <xacro:macro name="wheel" params="prefix x_reflect y_reflect"> -->
-  <link name="drivewhl_r_link">
+  <link name="drivewhl_l_link">
     <visual>
       <origin xyz="0 0 0" rpy="1.570796 0 0"/>
       <geometry>
         <cylinder radius="0.1" length="0.04"/>
       </geometry>
-      <material name="Gray">
-        <color rgba="0.5 0.5 0.5 1.0"/>
-      </material>
+      <material name="Gray"/>
     </visual>
 
     <collision>
@@ -153,25 +74,53 @@
 
   </link>
 
+  <!-- _________________________________________________________Wheel right_________________________________________________________ -->
+  
   <joint name="drivewhl_r_joint" type="continuous">
     <parent link="base_link"/>
     <child link="drivewhl_r_link"/>
     <origin xyz="-0.12 -0.18 -0.05" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
   </joint>
-  <!-- </xacro:macro> -->
 
-  <!-- <xacro:wheel prefix="drivewhl_l" x_reflect="-1" y_reflect="1" />
-  <xacro:wheel prefix="drivewhl_r" x_reflect="-1" y_reflect="-1" /> -->
+  <link name="drivewhl_r_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.04"/>
+      </geometry>
+      <material name="Gray"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.04"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="1.570796 0.0 0.0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.0025"/>
+    </inertial>
+
+  </link>
+
+  <!-- _________________________________________________________Caster Wheel_________________________________________________________ -->
+
+  <joint name="caster_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_caster"/>
+    <origin xyz="0.2 0.0 -0.09" rpy="0 0 0"/>
+  </joint>
 
   <link name="front_caster">
     <visual>
       <geometry>
         <sphere radius="0.06"/>
       </geometry>
-      <material name="Cyan">
-        <color rgba="0 1.0 1.0 1.0"/>
-      </material>
+      <material name="Cyan"/>
     </visual>
 
     <collision>
@@ -187,142 +136,16 @@
       <inertia ixx="0.000072" ixy="0.0" ixz="0.0" iyy="0.000072" iyz="0.0" izz="0.000072"/>
     </inertial>
 
-    <!-- <xacro:sphere_inertia m="0.5" r="${(0.1+0.05-(0.18/2))}"/> -->
   </link>
 
-  <joint name="caster_joint" type="fixed">
+  <!-- ___________________________________________________________________Laser___________________________________________________________________-->
+  
+  <joint name="laser_joint" type="fixed">
     <parent link="base_link"/>
-    <child link="front_caster"/>
-    <origin xyz="0.2 0.0 -0.09" rpy="0 0 0"/>
+    <child link="laser_link"/>
+    <origin rpy="0  0  0" xyz="0.16 0 0.12"/>
+    <axis xyz="0  0  0"/>
   </joint>
-  <!-- _________________________________________________________IMU__________________________________________________________-->
-  <link name="imu_link">
-    <visual>
-      <geometry>
-        <box size="0.1 0.1 0.1"/>
-      </geometry>
-    </visual>
-
-    <collision>
-      <geometry>
-        <box size="0.1 0.1 0.1"/>
-      </geometry>
-    </collision>
-
-    <!-- <xacro:box_inertia m="0.1" w="0.1" d="0.1" h="0.1"/> -->
-    <inertial>
-      <origin xyz="0.0 0.0 0.0" rpy="1.570796 0.0 1.570796"/>
-      <mass value="0.1"/>
-      <inertia ixx="0.00016" ixy="0.0" ixz="0.0" iyy="0.00016" iyz="0.0" izz="0.00016"/>
-    </inertial>
-
-  </link>
-
-  <joint name="imu_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="imu_link"/>
-    <origin xyz="0 0 0.01"/>
-  </joint>
-
-  <gazebo reference="imu_link">
-    <sensor name="imu_sensor" type="imu">
-      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <ros>
-          <namespace>/demo</namespace>
-          <remapping>~/out:=imu</remapping>
-        </ros>
-        <initial_orientation_as_reference>false</initial_orientation_as_reference>
-      </plugin>
-      <always_on>true</always_on>
-      <update_rate>100</update_rate>
-      <visualize>true</visualize>
-      <imu>
-        <angular_velocity>
-          <x>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-4</stddev>
-              <bias_mean>0.0000075</bias_mean>
-              <bias_stddev>0.0000008</bias_stddev>
-            </noise>
-          </x>
-          <y>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-4</stddev>
-              <bias_mean>0.0000075</bias_mean>
-              <bias_stddev>0.0000008</bias_stddev>
-            </noise>
-          </y>
-          <z>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-4</stddev>
-              <bias_mean>0.0000075</bias_mean>
-              <bias_stddev>0.0000008</bias_stddev>
-            </noise>
-          </z>
-        </angular_velocity>
-        <linear_acceleration>
-          <x>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>1.7e-2</stddev>
-              <bias_mean>0.1</bias_mean>
-              <bias_stddev>0.001</bias_stddev>
-            </noise>
-          </x>
-          <y>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>1.7e-2</stddev>
-              <bias_mean>0.1</bias_mean>
-              <bias_stddev>0.001</bias_stddev>
-            </noise>
-          </y>
-          <z>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>1.7e-2</stddev>
-              <bias_mean>0.1</bias_mean>
-              <bias_stddev>0.001</bias_stddev>
-            </noise>
-          </z>
-        </linear_acceleration>
-      </imu>
-    </sensor>
-  </gazebo>
-  <!-- _____________________________________________________Differential drive ________________________________________________-->
-  <gazebo>
-    <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
-      <ros>
-        <namespace>/demo</namespace>
-
-      </ros>
-
-      <!-- wheels -->
-      <left_joint>drivewhl_l_joint</left_joint>
-      <right_joint>drivewhl_r_joint</right_joint>
-
-      <!-- kinematics -->
-      <wheel_separation>0.025</wheel_separation>
-      <wheel_diameter>0.2</wheel_diameter>
-
-      <!-- limits -->
-      <max_wheel_torque>20</max_wheel_torque>
-      <max_wheel_acceleration>1.0</max_wheel_acceleration>
-
-      <!-- output -->
-      <publish_odom>true</publish_odom>
-      <publish_odom_tf>true</publish_odom_tf>
-      <publish_wheel_tf>true</publish_wheel_tf>
-
-      <odometry_frame>odom</odometry_frame>
-      <robot_base_frame>base_link</robot_base_frame>
-    </plugin>
-
-  </gazebo>
-  <!-- ____________________________________________Laser___________________________________________________________________-->
 
   <link name="laser_link">
     <inertial>
@@ -330,24 +153,28 @@
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
     </inertial>
+
     <collision name="collision-base">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <box size="0.05 0.05 0.041"/>
       </geometry>
     </collision>
+
     <visual name="visual-base">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <box size="0.05 0.05 0.041"/>
       </geometry>
     </visual>
+
     <collision name="collision-top">
       <origin rpy="0  0  0" xyz="0  0  0.035"/>
       <geometry>
         <cylinder length="0.029" radius="0.021"/>
       </geometry>
     </collision>
+
     <visual name="visual-top">
       <origin rpy="0  0  0" xyz="0  0  0.035"/>
       <geometry>
@@ -355,49 +182,6 @@
       </geometry>
     </visual>
 
-
   </link>
-
-  <joint name="laser_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="laser_link"/>
-    <origin rpy="0  0  0" xyz="0.16  0    0.12"/>
-    <axis xyz="0  0  0"/>
-
-  </joint>
-
-  <gazebo reference="laser_link">
-    <sensor name="laser" type="ray">
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>181</samples>
-            <resolution>1</resolution>
-            <!-- <min_angle>-1.57080</min_angle> -->
-            <min_angle>-1.04</min_angle>
-            <max_angle>1.04</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.08</min>
-          <max>10</max>
-          <resolution>0.05</resolution>
-        </range>
-      </ray>
-      <always_on>1</always_on>
-      <update_rate>10</update_rate>
-      <visualize>true</visualize>
-
-      <plugin name='laser' filename='libgazebo_ros_ray_sensor.so'>
-        <ros>
-          <namespace>/demo</namespace>
-          <!-- tolto il remapping originale -->
-          <remapping>~/out:=laser_scan</remapping>
-        </ros>
-        <output_type>sensor_msgs/LaserScan</output_type>
-      </plugin>
-    </sensor>
-  </gazebo>
-
 
 </robot>
