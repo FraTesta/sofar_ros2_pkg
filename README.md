@@ -121,3 +121,8 @@ ros2 run topic pub /demo/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0
 [rviz2-5] active samplers with a different type refer to the same texture image unit
 ```
 
+Ogni volta che compare questo errore [**display.launch.py**] da rviz2 sparisce la mappa:
+
+```
+[rviz2-5] [INFO] [1622370093.323633856] [rviz2]: Trying to create a map of size 155 x 155 using 1 swatches
+```
