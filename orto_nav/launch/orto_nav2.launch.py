@@ -29,7 +29,8 @@ from launch_ros.actions import Node
 def generate_launch_description():
     # Get the launch directory   
     orto_dir = get_package_share_directory('orto_nav')
-    launch_dir = os.path.join(orto_dir, 'launch')
+    bringup_dir = get_package_share_directory('nav2_bringup')
+    launch_dir = os.path.join(bringup_dir, 'launch')
 
     # Create the launch configuration variables
     slam = LaunchConfiguration('slam')
@@ -109,7 +110,7 @@ def generate_launch_description():
     declare_rviz_config_file_cmd = DeclareLaunchArgument(
         'rviz_config_file',
         default_value=os.path.join(
-            orto_dir, 'rviz', 'nav2_default_view.rviz'),
+            bringup_dir, 'rviz', 'nav2_default_view.rviz'),
         description='Full path to the RVIZ config file to use')
 
     declare_use_simulator_cmd = DeclareLaunchArgument(
@@ -131,7 +132,7 @@ def generate_launch_description():
         'headless',
         default_value='False',
         description='Whether to execute gzclient)')
-
+    """
     declare_world_cmd = DeclareLaunchArgument(
         'world',
         # TODO(orduno) Switch back once ROS argument passing has been fixed upstream
@@ -139,10 +140,10 @@ def generate_launch_description():
         # default_value=os.path.join(get_package_share_directory('turtlebot3_gazebo'),
         # worlds/turtlebot3_worlds/waffle.model')
         default_value=os.path.join(orto_dir, 'worlds', 'room.world'),
-        description='Full path to world model file to load')
+        description='Full path to world model file to load')"""
 
     # Specify the actions
-    start_gazebo_server_cmd = ExecuteProcess(
+    """start_gazebo_server_cmd = ExecuteProcess(
         condition=IfCondition(use_simulator),
         cmd=['gzserver', '-s', 'libgazebo_ros_init.so', world],
         cwd=[launch_dir], output='screen')
@@ -151,9 +152,9 @@ def generate_launch_description():
         condition=IfCondition(PythonExpression(
             [use_simulator, ' and not ', headless])),
         cmd=['gzclient'],
-        cwd=[launch_dir], output='screen')
+        cwd=[launch_dir], output='screen')"""
 
-    urdf = os.path.join(orto_dir, 'urdf', 'sam_bot_description.urdf')
+    """urdf = os.path.join(orto_dir, 'urdf', 'sam_bot_description.urdf')
 
     start_robot_state_publisher_cmd = Node(
         condition=IfCondition(use_robot_state_pub),
@@ -164,7 +165,7 @@ def generate_launch_description():
         output='screen',
         parameters=[{'use_sim_time': use_sim_time}],
         remappings=remappings,
-        arguments=[urdf])
+        arguments=[urdf])"""
 
     rviz_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -204,14 +205,14 @@ def generate_launch_description():
     ld.add_action(declare_use_robot_state_pub_cmd)
     ld.add_action(declare_use_rviz_cmd)
     ld.add_action(declare_simulator_cmd)
-    ld.add_action(declare_world_cmd)
+    #ld.add_action(declare_world_cmd)
 
     # Add any conditioned actions
-    ld.add_action(start_gazebo_server_cmd)
-    ld.add_action(start_gazebo_client_cmd)
+    #ld.add_action(start_gazebo_server_cmd)
+    #ld.add_action(start_gazebo_client_cmd)
 
     # Add the actions to launch all of the navigation nodes
-    ld.add_action(start_robot_state_publisher_cmd)
+    #ld.add_action(start_robot_state_publisher_cmd)
     ld.add_action(rviz_cmd)
     ld.add_action(bringup_cmd)
 
