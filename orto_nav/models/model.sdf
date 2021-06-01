@@ -23,7 +23,7 @@
             </inertial>
 
             <collision name="base_collision">
-                <pose>0.0 0.0 0.0 1.570796 0.0 1.570796</pose>
+                <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
                 <geometry>
                     <box>
                         <size>0.42 0.31 0.18</size>
@@ -32,7 +32,7 @@
             </collision>
 
             <visual name="base_visual">
-                <pose>0.0 0.0 0.0 1.570796 0.0 1.570796</pose>
+                <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
                 <geometry>
                     <box>
                         <size>0.42 0.31 0.18</size>
@@ -57,325 +57,336 @@
                 <mass>0.1</mass>
             </inertial>
 
-                <collision name="collision-base">
-                    <pose>0 0 0 0 0 0</pose>
-                    <geometry>
-                        <box>
-                            <size>0.05 0.05 0.041</size>
-                        </box>
-                    </geometry>
-                </collision>
+            <collision name="collision-base">
+                <pose>0.16 0 0.12 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>0.05 0.05 0.041</size>
+                    </box>
+                </geometry>
+            </collision>
 
-                <visual name="visual-base">
-                    <pose>0 0 0 0 0 0</pose>
-                    <geometry>
-                        <!-- <mesh>
+            <visual name="visual-base">
+                <pose>0.16 0  0.12 0 0 0</pose>
+                <geometry>
+                    <!-- <mesh>
                         <uri>model://turtlebot3_waffle/meshes/waffle_base.dae</uri>
                         <scale>0.001 0.001 0.001</scale>
-                        </mesh> -->
-                        <box>
-                            <size>0.05 0.05 0.041</size>
-                        </box>
-                    </geometry>
-                </visual>
+                    </mesh> -->
+                    <box>
+                        <size>0.05 0.05 0.041</size>
+                    </box>
+                </geometry>
+            </visual>
 
-                <collision name="collision-top">
-                    <pose>0 0 0.035 0 0 0</pose>
-                    <geometry>
-                        <cylinder>
-                            <radius>0.021</radius>
-                            <length>0.029</length>
-                        </cylinder>
-                    </geometry>
-                </collision>
+            <collision name="collision-top">
+                <pose>0.16 0 0.12 0 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.021</radius>
+                        <length>0.029</length>
+                    </cylinder>
+                </geometry>
+            </collision>
 
-                <visual name="visual-top">
-                    <pose>0 0 0.035 0 0 0</pose>
-                    <geometry>
-                        <cylinder>
-                            <radius>0.021</radius>
-                            <length>0.029</length>
-                        </cylinder>
-                    </geometry>
-                </visual>
+            <visual name="visual-top">
+                <pose>0.16 0 0.12 0 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.021</radius>
+                        <length>0.029</length>
+                    </cylinder>
+                </geometry>
+            </visual>
 
-                <sensor name="laser" type="ray">
-                    <always_on>true</always_on>
-                    <visualize>true</visualize>
-                    <pose>0 0 0.035 0 0 0</pose>
-                    <update_rate>5</update_rate>
-                    <ray>
-                        <scan>
-                            <horizontal>
-                                <samples>360</samples>
-                                <resolution>1.000000</resolution>
-                                <min_angle>-1.04</min_angle>
-                                <max_angle>1.04</max_angle>
-                            </horizontal>
-                        </scan>
-                        <range>
-                            <min>0.120000</min>
-                            <max>10</max>
-                            <resolution>0.015000</resolution>
-                        </range>
-                        <noise>
-                            <type>gaussian</type>
-                            <mean>0.0</mean>
-                            <stddev>0.01</stddev>
-                        </noise>
-                    </ray>
-                    <plugin name="laser" filename="libgazebo_ros_ray_sensor.so">
-                        <ros>
-                            <!-- <namespace>/tb3</namespace> -->
-                            <remapping>~/out:=laser_scan</remapping>
-                        </ros>
-                        <output_type>sensor_msgs/LaserScan</output_type>
-                        <frame_name>laser_link</frame_name>
-                    </plugin>
-                </sensor>
-            </link>
+            <sensor name="laser" type="ray">
+                <always_on>true</always_on>
+                <visualize>true</visualize>
+                <pose>0.16 0 0.12 0 0 0</pose>
+                <update_rate>5</update_rate>
+                <ray>
+                    <scan>
+                        <horizontal>
+                            <samples>360</samples>
+                            <resolution>1.000000</resolution>
+                            <min_angle>-1.04</min_angle>
+                            <max_angle>1.04</max_angle>
+                        </horizontal>
+                    </scan>
+                    <range>
+                        <min>0.120000</min>
+                        <max>10</max>
+                        <resolution>0.015000</resolution>
+                    </range>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.01</stddev>
+                    </noise>
+                </ray>
+                <plugin name="laser" filename="libgazebo_ros_ray_sensor.so">
+                    <ros>
+                        <!-- <namespace>/tb3</namespace> -->
+                        <remapping>~/out:=laser_scan</remapping>
+                    </ros>
+                    <output_type>sensor_msgs/LaserScan</output_type>
+                    <frame_name>laser_link</frame_name>
+                </plugin>
+            </sensor>
+        </link>
 
-            <!-- _________________________________________________________Wheel left_________________________________________________________ -->
-            <link name="drivewhl_l_link">
+        <!-- _________________________________________________________Wheel left_________________________________________________________ -->
+        <link name="drivewhl_l_link">
 
-                <inertial>
-                    <pose>0.0 0.0 0.0 1.570796 0.0 0.0</pose>
-                    <inertia>
-                        <ixx>0.001</ixx>
-                        <ixy>0.000</ixy>
-                        <ixz>0.000</ixz>
-                        <iyy>0.001</iyy>
-                        <iyz>0.000</iyz>
-                        <izz>0.0025</izz>
-                    </inertia>
-                    <mass>0.5</mass>
-                </inertial>
+            <inertial>
+                <pose>-0.12 0.18 -0.05 -1.57 0 0</pose>
+                <inertia>
+                    <ixx>0.001</ixx>
+                    <ixy>0.000</ixy>
+                    <ixz>0.000</ixz>
+                    <iyy>0.001</iyy>
+                    <iyz>0.000</iyz>
+                    <izz>0.0025</izz>
+                </inertia>
+                <mass>0.5</mass>
+            </inertial>
 
-                <collision name="wheel_left_collision">
-                    <pose>0.0 0.0 0.0 1.570796 0.0 0.0</pose>
-                    <geometry>
-                        <cylinder>
-                            <radius>0.1</radius>
-                            <length>0.04</length>
-                        </cylinder>
-                    </geometry>
+            <collision name="wheel_left_collision">
+                <pose>-0.12 0.18 -0.05 -1.57 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.1</radius>
+                        <length>0.04</length>
+                    </cylinder>
+                </geometry>
 
-                    <surface>
-                        <!-- This friction pamareter don't contain reliable data!! -->
-                        <friction>
-                            <ode>
-                                <mu>100000.0</mu>
-                                <mu2>100000.0</mu2>
-                                <fdir1>0 0 0</fdir1>
-                                <slip1>0.0</slip1>
-                                <slip2>0.0</slip2>
-                            </ode>
-                        </friction>
-                        <contact>
-                            <ode>
-                                <soft_cfm>0</soft_cfm>
-                                <soft_erp>0.2</soft_erp>
-                                <kp>1e+5</kp>
-                                <kd>1</kd>
-                                <max_vel>0.01</max_vel>
-                                <min_depth>0.001</min_depth>
-                            </ode>
-                        </contact>
-                    </surface>
-                </collision>
+                <surface>
+                    <!-- This friction pamareter don't contain reliable data!! -->
+                    <friction>
+                        <ode>
+                            <mu>100000.0</mu>
+                            <mu2>100000.0</mu2>
+                            <fdir1>0 0 0</fdir1>
+                            <slip1>0.0</slip1>
+                            <slip2>0.0</slip2>
+                        </ode>
+                    </friction>
+                    <contact>
+                        <ode>
+                            <soft_cfm>0</soft_cfm>
+                            <soft_erp>0.2</soft_erp>
+                            <kp>1e+5</kp>
+                            <kd>1</kd>
+                            <max_vel>0.01</max_vel>
+                            <min_depth>0.001</min_depth>
+                        </ode>
+                    </contact>
+                </surface>
+            </collision>
 
-                <visual name="wheel_left_visual">
-                    <pose>0.0 0.0 0.0 1.570796 0.0 0.0</pose>
-                    <geometry>
-                        <cylinder>
-                            <radius>0.1</radius>
-                            <length>0.04</length>
-                        </cylinder>
-                    </geometry>
-                </visual>
-            </link>
+            <visual name="wheel_left_visual">
+                <pose>-0.12 0.18 -0.05 -1.57 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.1</radius>
+                        <length>0.04</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
 
-            <!-- _________________________________________________________Wheel right_________________________________________________________ -->
-            <link name="drivewhl_r_link">
+        <!-- _________________________________________________________Wheel right_________________________________________________________ -->
+        <link name="drivewhl_r_link">
 
-                <inertial>
-                    <pose>0.0 0.0 0.0 1.570796 0.0 0.0</pose>
-                    <inertia>
-                        <ixx>0.001</ixx>
-                        <ixy>0.000</ixy>
-                        <ixz>0.000</ixz>
-                        <iyy>0.001</iyy>
-                        <iyz>0.000</iyz>
-                        <izz>0.0025</izz>
-                    </inertia>
-                    <mass>0.5</mass>
-                </inertial>
+            <inertial>
+                <pose>-0.12 -0.18 -0.05 -1.57 0 0</pose>
+                <inertia>
+                    <ixx>0.001</ixx>
+                    <ixy>0.000</ixy>
+                    <ixz>0.000</ixz>
+                    <iyy>0.001</iyy>
+                    <iyz>0.000</iyz>
+                    <izz>0.0025</izz>
+                </inertia>
+                <mass>0.5</mass>
+            </inertial>
 
-                <collision name="wheel_right_collision">
-                    <pose>0.0 0.0 0.0 1.570796 0.0 0.0</pose>
-                    <geometry>
-                        <cylinder>
-                            <radius>0.1</radius>
-                            <length>0.04</length>
-                        </cylinder>
-                    </geometry>
-                    <surface>
-                        <!-- This friction pamareter don't contain reliable data!! -->
-                        <friction>
-                            <ode>
-                                <mu>100000.0</mu>
-                                <mu2>100000.0</mu2>
-                                <fdir1>0 0 0</fdir1>
-                                <slip1>0.0</slip1>
-                                <slip2>0.0</slip2>
-                            </ode>
-                        </friction>
-                        <contact>
-                            <ode>
-                                <soft_cfm>0</soft_cfm>
-                                <soft_erp>0.2</soft_erp>
-                                <kp>1e+5</kp>
-                                <kd>1</kd>
-                                <max_vel>0.01</max_vel>
-                                <min_depth>0.001</min_depth>
-                            </ode>
-                        </contact>
-                    </surface>
-                </collision>
+            <collision name="wheel_right_collision">
+                <pose>-0.12 -0.18 -0.05 -1.57 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.1</radius>
+                        <length>0.04</length>
+                    </cylinder>
+                </geometry>
+                <surface>
+                    <!-- This friction pamareter don't contain reliable data!! -->
+                    <friction>
+                        <ode>
+                            <mu>100000.0</mu>
+                            <mu2>100000.0</mu2>
+                            <fdir1>0 0 0</fdir1>
+                            <slip1>0.0</slip1>
+                            <slip2>0.0</slip2>
+                        </ode>
+                    </friction>
+                    <contact>
+                        <ode>
+                            <soft_cfm>0</soft_cfm>
+                            <soft_erp>0.2</soft_erp>
+                            <kp>1e+5</kp>
+                            <kd>1</kd>
+                            <max_vel>0.01</max_vel>
+                            <min_depth>0.001</min_depth>
+                        </ode>
+                    </contact>
+                </surface>
+            </collision>
 
-                <visual name="wheel_right_visual">
-                    <pose>0.0 0.0 0.0 1.570796 0.0 0.0</pose>
-                    <geometry>
-                        <cylinder>
-                            <radius>0.1</radius>
-                            <length>0.04</length>
-                        </cylinder>
-                    </geometry>
-                </visual>
-            </link>
+            <visual name="wheel_right_visual">
+                <pose>-0.12 -0.18 -0.05 -1.57 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.1</radius>
+                        <length>0.04</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
 
-            <!-- _________________________________________________________Caster Wheel_________________________________________________________ -->
-            <link name='front_caster'>
-                <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+        <!-- _________________________________________________________Caster Wheel_________________________________________________________ -->
+        <link name='front_caster'>
+            <pose>0.2 0.0 -0.09 0 0 0</pose>
+            
+            <inertial>
+                <!-- <pose>0.2 0.0 -0.09 0 0 0</pose> --> 
+                <mass>0.005</mass>
+                <inertia>
+                    <ixx>0.00001</ixx>
+                    <ixy>0.000</ixy>
+                    <ixz>0.000</ixz>
+                    <iyy>0.000072</iyy>
+                    <iyz>0.000</iyz>
+                    <izz>0.00001</izz>
+                </inertia>
+            </inertial>
 
-                <inertial>
-                    <mass>0.05</mass>
-                    <inertia>
-                        <ixx>0.000072</ixx>
-                        <ixy>0.000</ixy>
-                        <ixz>0.000</ixz>
-                        <iyy>0.000072</iyy>
-                        <iyz>0.000</iyz>
-                        <izz>0.000072</izz>
-                    </inertia>
-                </inertial>
+            <collision name='collision'>
+                <geometry>
+                    <sphere>
+                        <radius>0.06</radius>
+                    </sphere>
+                </geometry>
+                <surface>
+                    <contact>
+                        <ode>
+                            <soft_cfm>0</soft_cfm>
+                            <soft_erp>0.2</soft_erp>
+                            <kp>1e+5</kp>
+                            <kd>1</kd>
+                            <max_vel>0.01</max_vel>
+                            <min_depth>0.001</min_depth>
+                        </ode>
+                    </contact>
+                </surface>
+            </collision>
+            <!-- -->
+            <visual name="front_visual">
+                <!-- <pose>0.2 0.0 -0.09 0 0 0</pose> -->
+                
+                <geometry>
+                    <sphere>
+                        <radius>0.06</radius>
+                    </sphere>
+                </geometry>
+            </visual>
+        </link>
+        <!-- ___________________________________________________________________JOINT___________________________________________________________________-->
 
-                <collision name='collision'>
-                    <geometry>
-                        <sphere>
-                            <radius>0.06</radius>
-                        </sphere>
-                    </geometry>
-                    <surface>
-                        <contact>
-                            <ode>
-                                <soft_cfm>0</soft_cfm>
-                                <soft_erp>0.2</soft_erp>
-                                <kp>1e+5</kp>
-                                <kd>1</kd>
-                                <max_vel>0.01</max_vel>
-                                <min_depth>0.001</min_depth>
-                            </ode>
-                        </contact>
-                    </surface>
-                </collision>
-            </link>
-            <!-- ___________________________________________________________________JOINT___________________________________________________________________-->
+        <joint name="base_joint" type="fixed">
+            <parent>base_footprint</parent>
+            <child>base_link</child>
+            <pose>0.0 0.0 0 0 0 0</pose>
+        </joint>
 
-            <joint name="base_joint" type="fixed">
-                <parent>base_footprint</parent>
-                <child>base_link</child>
-                <pose>0.0 0.0 -0.15 0 0 0</pose>
-            </joint>
+        <joint name="drivewhl_l_joint" type="revolute">
+            <parent>base_link</parent>
+            <child>drivewhl_l_link</child>
+            <pose>-0.12 0.18 -0.05 -1.57 0 0</pose>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
 
-            <joint name="drivewhl_l_joint" type="revolute">
-                <parent>base_link</parent>
-                <child>drivewhl_l_link</child>
-                <pose>-0.12 0.18 -0.05 0 0 0</pose>
-                <axis>
-                    <xyz>0.0 1 0.0</xyz>
-                </axis>
-            </joint>
+        <joint name="drivewhl_r_joint" type="revolute">
+            <parent>base_link</parent>
+            <child>drivewhl_r_link</child>
+            <pose>-0.12 -0.18 -0.05 -1.57 0 0</pose>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
 
-            <joint name="drivewhl_r_joint" type="revolute">
-                <parent>base_link</parent>
-                <child>drivewhl_r_link</child>
-                <pose>-0.12 -0.18 -0.05 0 0 0</pose>
-                <axis>
-                    <xyz>0.0 1 0.0</xyz>
-                </axis>
-            </joint>
+        <joint name='caster_joint' type='ball'>
+            <parent>base_link</parent>
+            <child>front_caster</child>
+            <!-- <pose>0.2 0 -0.09 0 0 0</pose> --> 
+        </joint>
 
-            <joint name='caster_joint' type='ball'>
-                <parent>base_link</parent>
-                <child>front_caster</child>
-                <pose>0.2 0.0 -0.09 0.0 0.0 0.0</pose>
-            </joint>
+        <joint name="laser_joint" type="fixed">
+            <parent>base_link</parent>
+            <child>laser_link</child>
+            <pose>0.16 0 0.12 0 0 0</pose>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
 
-            <joint name="laser_joint" type="fixed">
-                <parent>base_link</parent>
-                <child>laser_link</child>
-                <pose>0.16 0 0.12 0.0 0.0 0.0</pose>
-                <axis>
-                    <xyz>0 0 0</xyz>
-                </axis>
-            </joint>
+        <!-- ___________________________________________________________________PLUGIN___________________________________________________________________-->
 
-            <!-- ___________________________________________________________________PLUGIN___________________________________________________________________-->
+        <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
 
-            <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+            <ros>
+                <!-- <namespace>/tb3</namespace> -->
+                <namespace>/demo</namespace>
+            </ros>
 
-                <ros>
-                    <!-- <namespace>/tb3</namespace> -->
-                    <namespace>/demo</namespace>
-                </ros>
+            <update_rate>30</update_rate>
 
-                <update_rate>30</update_rate>
+            <!-- wheels -->
+            <left_joint>drivewhl_l_joint</left_joint>
+            <right_joint>drivewhl_r_joint</right_joint>
 
-                <!-- wheels -->
-                <left_joint>drivewhl_l_joint</left_joint>
-                <right_joint>drivewhl_r_joint</right_joint>
+            <!-- kinematics -->
+            <wheel_separation>0.025</wheel_separation>
+            <wheel_diameter>0.2</wheel_diameter>
 
-                <!-- kinematics -->
-                <wheel_separation>0.025</wheel_separation>
-                <wheel_diameter>0.2</wheel_diameter>
+            <!-- limits -->
+            <max_wheel_torque>20</max_wheel_torque>
+            <max_wheel_acceleration>1.0</max_wheel_acceleration>
 
-                <!-- limits -->
-                <max_wheel_torque>20</max_wheel_torque>
-                <max_wheel_acceleration>1.0</max_wheel_acceleration>
+            <command_topic>cmd_vel</command_topic>
 
-                <command_topic>cmd_vel</command_topic>
+            <!-- output -->
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+            <publish_wheel_tf>false</publish_wheel_tf>
 
-                <!-- output -->
-                <publish_odom>true</publish_odom>
-                <publish_odom_tf>true</publish_odom_tf>
-                <publish_wheel_tf>false</publish_wheel_tf>
+            <odometry_topic>odom</odometry_topic>
+            <odometry_frame>odom</odometry_frame>
+            <robot_base_frame>base_footprint</robot_base_frame>
 
-                <odometry_topic>odom</odometry_topic>
-                <odometry_frame>odom</odometry_frame>
-                <robot_base_frame>base_footprint</robot_base_frame>
+        </plugin>
 
-            </plugin>
+        <plugin name="joint_state" filename="libgazebo_ros_joint_state_publisher.so">
+            <ros>
+                <!-- <namespace>/tb3</namespace> -->
+                <remapping>~/out:=joint_states</remapping>
+            </ros>
+            <update_rate>30</update_rate>
+            <joint_name>drivewhl_l_joint</joint_name>
+            <joint_name>drivewhl_r_joint</joint_name>
+        </plugin>
 
-            <plugin name="joint_state" filename="libgazebo_ros_joint_state_publisher.so">
-                <ros>
-                    <!-- <namespace>/tb3</namespace> -->
-                    <remapping>~/out:=joint_states</remapping>
-                </ros>
-                <update_rate>30</update_rate>
-                <joint_name>drivewhl_l_joint</joint_name>
-                <joint_name>drivewhl_r_joint</joint_name>
-            </plugin>
-
-        </model>
-    </sdf>
+    </model>
+</sdf>
