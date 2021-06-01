@@ -52,10 +52,7 @@ sudo apt install --no-install-recommends -y \
 
 1. clone this pkgs into your ros 2 workspace
 
-2. Copy the folder *meshes* in orthopillar_robot_spawner_pkg/model/orto_meshes into a new folder called *orthopillar* to be placed in /.gazebo/models 
-
-3. Put in ./gazebo/models/orthopillar also the file.config that you can find in orthopillar_robot_spawner_pkg/model/orthopillar
-4. install: 
+2. install: 
    ```
    pip3 install xacro
    sudo apt install ros-foxy-xacro
@@ -63,7 +60,7 @@ sudo apt install --no-install-recommends -y \
    sudo apt install ros-foxy-robot-localization
    ```
 
-5. colcon build at the root of the workspace
+3. colcon build at the root of the workspace
 ## Run 
 
 1. run the command to spawn the robot in gazebo: 
@@ -75,9 +72,13 @@ sudo apt install --no-install-recommends -y \
 3.  in another shell type < rviz2 > and load the configuration or create a new one.
 
 # Nav2 installation
-  Install the slam toolbox package
+  Install the slam toolbox and navigation2 packages
   ```
   sudo apt-get install ros-foxy-slam-toolbox
+  sudo apt-get install ros-foxy-navigation2
+  sudo apt-get install ros-foxy-nav2-bringup
+
+
   ```
    ## Run 
    1. launch the ortopillar simulation:
