@@ -1,0 +1,161 @@
+<?xml version="1.0" ?>
+<robot name="orthopillar">
+
+<link name="chassis">
+    
+    
+    
+    <collision name="collision">
+    <origin xyz="0 0 0.2 "/> 
+      <geometry>
+        <box size="0.3 0.6 0.2"/>
+      </geometry>
+    </collision>
+    
+    <visual name="visual">
+     <origin xyz="0 0 0.2 "/> 
+      <geometry>
+         <!-- <mesh filename="package://orthopillar_robot_spawner_pkg/models/ortho_meshes/meshes/orthopillar.stl" scale="0.25 0.25 0.25 " /> -->
+      <box size="0.3 0.6 0.2"/>
+      </geometry>
+    </visual>
+    
+    <collision name="caster_collision">
+    <origin rpy="0  0  0" xyz="0 0    0.03"/>
+      <geometry>
+        <sphere radius=".05"/>
+      </geometry>
+ </collision>
+    
+    <visual name="caster_visual">
+    <origin rpy="0  0  0" xyz="0  0  0.03"/>
+      <geometry>
+        <sphere radius=".05"/>
+      </geometry>
+    </visual>
+  </link>
+  
+
+
+  <link name="right_wheel">
+     
+    <collision name="collision">
+     <origin rpy="0  0  0" xyz="0    0    -0.03"/>
+      <geometry>
+        <cylinder length=".05" radius=".1"/>
+      </geometry>
+    </collision>
+    
+    <visual name="visual">
+  <origin rpy="0  0  0" xyz="0    0    -0.03"/>
+      <geometry>
+        <cylinder length=".05" radius=".1"/>
+      </geometry>
+    </visual>
+  </link>
+
+<link name="left_wheel">
+   
+    <collision name="collision">
+      <!-- <origin xyz="-0.15 -0.13 0.4 " rpy=" 0 0 1.5707 " /> -->
+      <origin rpy="0  0  0" xyz="0    0    0.03"/>
+      <geometry>
+        <cylinder length=".05" radius=".1"/>
+      </geometry>
+    </collision>
+     
+     
+    <visual name="visual">
+     <origin rpy="0  0  0" xyz="0    0    0.03"/>
+      <geometry>
+        <cylinder length=".05" radius=".1"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="left_wheel_hinge" type="revolute">
+    <parent link="chassis"/>
+    <child link="left_wheel"/>
+    <origin rpy="0      1.5707  1.5707" xyz="0.11999  0.16     0.09999"/>
+    <axis xyz="0  0   1"/>
+    <limit effort="10000" velocity="1000"/>
+    <joint_properties damping="1.0" friction="1.0"/> 
+   
+  </joint>
+  
+  <joint name="right_wheel_hinge" type="revolute">
+    <parent link="chassis"/>
+    <child link="right_wheel"/>
+    <origin rpy="0      1.5707  1.5707" xyz="0.12 -0.16  0.1"/>
+    <axis xyz="0 0 1"/>
+     <limit effort="10000" velocity="1000"/>
+    <joint_properties damping="1.0" friction="1.0"/> 
+  </joint>
+  
+  
+
+  <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
+         <ros>
+           <namespace>/demo</namespace>
+           <remapping>cmd_vel:=cmd_vel</remapping>
+           <remapping>odom:=odom</remapping>
+         </ros>
+
+         <!-- wheels -->
+         <left_joint>left_wheel_hinge</left_joint>
+         <right_joint>right_wheel_hinge</right_joint>
+
+         <!-- kinematics -->
+         <wheel_separation>0.26</wheel_separation>
+         <wheel_diameter>0.2</wheel_diameter>
+
+         <!-- limits -->
+         <max_wheel_torque>20</max_wheel_torque>
+         <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+         <!-- output -->
+         <publish_odom>true</publish_odom>
+         <publish_odom_tf>true</publish_odom_tf>
+         <publish_wheel_tf>true</publish_wheel_tf>
+
+         <odometry_frame>odom</odometry_frame>
+         <robot_base_frame>chassis</robot_base_frame>
+       </plugin>      
+    
+    
+    <link name="laser_link">
+    <inertial>
+      <mass value="0.1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+    <collision name="collision-base">
+      <origin rpy="0  0  0" xyz="0      0     -0.0145"/>
+      <geometry>
+        <box size="0.05 0.05 0.041"/>
+      </geometry>
+    </collision>
+    <collision name="collision-top">
+      <origin rpy="0  0  0" xyz="0      0      0.0205"/>
+      <geometry>
+        <cylinder length="0.029" radius="0.021"/>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+         <cylinder length="0.029" radius="0.021"/>
+      </geometry>
+    </visual>
+  </link>
+ 
+<joint name="laser_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="laser_link"/>
+    <origin rpy="0  0  1.5707" xyz="0  0.15    0.3"/>
+    <axis xyz="0  0  0"/>
+   
+  </joint>
+
+
+</robot>

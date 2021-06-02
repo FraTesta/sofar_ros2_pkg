@@ -24,26 +24,27 @@ def generate_launch_description():
         name='joint_state_publisher',
         condition=launch.conditions.UnlessCondition(LaunchConfiguration('gui'))
     )
+    """
     rviz_node = launch_ros.actions.Node(
         package='rviz2',
         executable='rviz2',
         name='rviz2',
         output='screen',
         arguments=['-d', LaunchConfiguration('rvizconfig')],
-    )
-
+    )"""
+    """
     gazebo = ExecuteProcess(
             cmd=['gazebo', '--verbose', world, '-s', 'libgazebo_ros_init.so', 
             '-s', 'libgazebo_ros_factory.so'],
-            output='screen')
-
+            output='screen')"""
+    """
     spawn_entity = launch_ros.actions.Node(
     	package='gazebo_ros', 
     	executable='spawn_entity.py',
         arguments=['-entity', 'sam_bot', '-topic', 'robot_description', '-x','1.0','-y','1.0'],
         #arguments=['-entity', 'sam_bot', '-topic', 'robot_description'],
         output='screen'
-    )
+    )"""
     robot_localization_node = launch_ros.actions.Node(
          package='robot_localization',
          executable='ekf_node',
@@ -64,10 +65,10 @@ def generate_launch_description():
         launch.actions.DeclareLaunchArgument(name='use_sim_time', default_value='True',
                                             description='Flag to enable use_sim_time'),
         #launch.actions.ExecuteProcess(cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_factory.so'], output='screen'),
-        gazebo,
+        #gazebo,
         joint_state_publisher_node,
         robot_state_publisher_node,
-        spawn_entity,
+        #spawn_entity,
         robot_localization_node,
-        rviz_node
+        #rviz_node
     ])
