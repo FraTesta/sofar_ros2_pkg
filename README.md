@@ -60,7 +60,15 @@ Currently the model of the ortopillar is defined in the _sam_bot_description_ pa
    sudo apt install ros-foxy-robot-localization
    ```
 
-3. colcon build at the root of the workspace
+3. At the root of the workspace:
+```
+rosdep install -y -r -q --from-paths src --ignore-src --rosdistro foxy
+```
+
+4. Then:
+```
+colcon build --symlink-install
+```
 ## Run 
 
 1. run the command to spawn the robot in gazebo: 
@@ -104,11 +112,17 @@ Currently the model of the ortopillar is defined in the _sam_bot_description_ pa
    ros2 run nav2_map_server map_saver_cli -f /home/<username>/<workspace_name>/src/navigation2/nav2_bringup/bringup/maps/map
    ```
    ### Launch Navigation
-   1. Launch the navigation nodes
+
+   1. launch the ortopillar simulation:
+   ```
+   ros2 launch sam_bot_description display.launch.py
+   ```
+
+   2. Launch the navigation nodes
    ```
    ros2 launch orto_nav bringup_launch.py use_sim_time:=True autostart:=True \map:=/home/<username>/<workspace_name>/src/orto_nav/maps/map.yaml
    ```
-   2. In another terminal launch rviz2 with the proper project configuration
+   3. In another terminal launch rviz2 with the proper project configuration
   ```
     ros2 run rviz2 rviz2 -d $(ros2 pkg prefix nav2_bringup)/share/nav2_bringup/rviz/nav2_default_view.rviz
   ```
