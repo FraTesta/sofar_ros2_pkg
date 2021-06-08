@@ -47,9 +47,9 @@ sudo apt install --no-install-recommends -y \
 
    ```
 
-# ROS2_ortopillar_packages
+# Ortopillar_packages
 
-
+Currently the model of the ortopillar is defined in the _sam_bot_description_ package, which contains the xacro model and the localization_robot definition. This last one provides the transformations needed w.r.t. the odom frame and an ekf for the odometry.
 1. clone this pkgs into your ros 2 workspace
 
 2. install: 
@@ -67,63 +67,65 @@ sudo apt install --no-install-recommends -y \
    ```
    ros2 launch sam_bot_description display.launch.py 
    ```
-2. in another shell: ros2 launch orthopillar_robot_controller_pkg controller_estimator.launch.py (make the robot move using odometry and lidar).
 
-3.  in another shell type < rviz2 > and load the configuration or create a new one.
+2.  in another shell type < rviz2 > and load the configuration or create a new one.
 
 # Nav2 installation
-  Install the slam toolbox and navigation2 packages
+  The Navigation2 package provides several tools for the autonomous navigation. But it needs a slam package to build a map to use in its navigation algorithm.
+  Therefore install the slam toolbox and navigation2 packages:
   ```
   sudo apt-get install ros-foxy-slam-toolbox
   sudo apt-get install ros-foxy-navigation2
   sudo apt-get install ros-foxy-nav2-bringup
-
+  ```
+  Since the navigation2 pkg requires the setting of several configuration file in order to adapt the application to a custom robot, it's necessary to build the navigation2 pkg that we have provided in this project using the following commands: 
+   ```
 
   ```
+
    ## Run 
+   ### Map Generation
+   As already said first of all we need to build a map to send to the navigation2, thus use the following commands to crate the map of the provided world. Please notice that a map is already provided in the map directory of the nav2_bringup pkg so you can skip the following commands and go to the _Launch_Navigation_.
+
    1. launch the ortopillar simulation:
    ```
    ros2 launch sam_bot_description display.launch.py
    ```
-   2. **Add some obstacles in the environment from Gazebo.**
-
-   3. In another __sourced__ (. install/setup.bash) terminal launch the slam node:
+   2. In another __sourced__ terminal launch the slam node:
    ```
    ros2 launch orto_nav slam.launch.py
    ```
-   4. In the final terminal (__sourced__) launch the teleop in order to drive the robot and build the whole map :
+   3. In the final terminal (__sourced__) launch the teleop in order to drive the robot and build the whole map :
    ```
    ros2 run teleop_twist_keyboard teleop_twist_keyboard
    ```
-   5. Save the map (il primo comando la salva nella WS con il secondo dovrebbe salvarla in nav2_bringup)
+   4. Save the map (il primo comando la salva nella WS con il secondo dovrebbe salvarla in nav2_bringup)
   ```
-   ros2 run nav2_map_server map_saver_cli -f map
-   ros2 run nav2_map_server map_saver_cli -f /home/francescotesta/prove_ws/src/navigation2/nav2_bringup/bringup/maps/map
+   ros2 run nav2_map_server map_saver_cli -f /home/<username>/<workspace_name>/src/navigation2/nav2_bringup/bringup/maps/map
    ```
-   
-   6. Launch the navigation node keeping the robot and slam nodes active (non so se serve ribuildare la WS di navigation2 per aggiornare la mappa)
+   ### Launch Navigation
+   1. Launch the navigation nodes
    ```
-   ros2 launch nav2_bringup navigation_launch.py
+   ros2 launch orto_nav bringup_launch.py use_sim_time:=True autostart:=True \map:=/home/<username>/<workspace_name>/src/orto_nav/maps/map.yaml
    ```
-   7. Finally in another terminal you can give a goal position to the robot using the nav2 action server (Non va ancora però riceve i goal msg, riprovare con una mappa completa):
+   2. In another terminal launch rviz2 with the proper project configuration
+  ```
+    ros2 run rviz2 rviz2 -d $(ros2 pkg prefix nav2_bringup)/share/nav2_bringup/rviz/nav2_default_view.rviz
+  ```
+  **Currently it's necessary to set the initial position of the model placing the _Intial 2d Pose_ over the map frame in Rviz. Then you can enable the robot model configuration in order to see the robot on Rviz.**
+   1. Finally you can set a goal position just placing the _Nav2d Goal_ Rviz graphic tool in the desired position. Or you can set it from another terminal using:
    ```
    ros2 topic pub /goal_pose geometry_msgs/PoseStamped "{header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}"
    ```
 
-# Comandi Utili
+# Useful Commands
 ```
-ros2 run tf2_ros tf2_echo <frame1> <frame2>  # per vedere le pubblicazioni tra frame
-ros2 run tf2_tools view_frames.py    # per generare l'albero dei frame 
-ros2 run topic pub /demo/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"   # per muovere il robot 
+ros2 run tf2_ros tf2_echo <frame1> <frame2>  # to see the tf publications between two frames
+ros2 run tf2_tools view_frames.py    # to build the frames tree 
 ```
 # Problems
-```
-[rviz2-5] [ERROR] [1621514855.514780670] [rviz2]: Vertex Program:rviz/glsl120/indexed_8bit_image.vert Fragment Program:rviz/glsl120/indexed_8bit_image.frag GLSL link result : 
-[rviz2-5] active samplers with a different type refer to the same texture image unit
-```
-
-Ogni volta che compare questo errore [**display.launch.py**] da rviz2 sparisce la mappa:
-
-```
-[rviz2-5] [INFO] [1622370093.323633856] [rviz2]: Trying to create a map of size 155 x 155 using 1 swatches
-```
+Currently the robot doesn't turn in smooth way maybe since its castor wheel has a fixed joint. So we still have to correct some model features.
+# To Do
+1. Find a way to compute and store the distance between the robot and the current goal in order to send it to the ROS1 simulation.
+2. Avoid to place manually the robot position when we launch the Rviz node. 
+3. Implement a node that handle the robot-goal distance and sent this information ROS1 using the ros_bridge 

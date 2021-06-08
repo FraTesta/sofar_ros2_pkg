@@ -6,7 +6,7 @@ amcl:
     alpha3: 0.2
     alpha4: 0.2
     alpha5: 0.2
-    base_frame_id: "base_footprint"
+    base_frame_id: "base_link"
     beam_skip_distance: 0.5
     beam_skip_error_threshold: 0.9
     beam_skip_threshold: 0.3
@@ -37,7 +37,7 @@ amcl:
     z_max: 0.05
     z_rand: 0.5
     z_short: 0.05
-    scan_topic: /demo/laser_scan
+    scan_topic: /laser_scan
 
 amcl_map_client:
   ros__parameters:
@@ -52,7 +52,7 @@ bt_navigator:
     use_sim_time: True
     global_frame: map #map
     robot_base_frame: base_link
-    odom_topic: /demo/odom
+    odom_topic: /odom
     enable_groot_monitoring: True
     groot_zmq_publisher_port: 1666
     groot_zmq_server_port: 1667
@@ -133,7 +133,7 @@ controller_server:
       sim_time: 1.7
       linear_granularity: 0.05
       angular_granularity: 0.025
-      transform_tolerance: 0.2
+      transform_tolerance: 0.3 # 0.2
       xy_goal_tolerance: 0.25
       trans_stopped_velocity: 0.25
       short_circuit_trajectory_evaluation: True
@@ -183,7 +183,7 @@ local_costmap:
         mark_threshold: 0
         observation_sources: scan
         scan:
-          topic: /demo/laser_scan
+          topic: /laser_scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True
@@ -215,7 +215,7 @@ global_costmap:
         enabled: True
         observation_sources: scan
         scan:
-          topic: /demo/laser_scan
+          topic: /laser_scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True

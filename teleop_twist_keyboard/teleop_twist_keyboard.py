@@ -135,7 +135,7 @@ def main():
     rclpy.init()
 
     node = rclpy.create_node('teleop_twist_keyboard')
-    pub = node.create_publisher(geometry_msgs.msg.Twist, '/demo/cmd_vel', 10)
+    pub = node.create_publisher(geometry_msgs.msg.Twist, '/cmd_vel', 10)
 
     speed = 0.3
     turn = 4.0

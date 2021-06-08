@@ -16,8 +16,8 @@
   <xacro:property name="wheel_zoff" value="0.05"/>
   <xacro:property name="wheel_xoff" value="0.12"/>
 
-  <xacro:property name="caster_xoff" value="0.2"/>
-  <!--0.14-->
+  <xacro:property name="caster_xoff" value="0.14"/>
+  <!--0.2-->
 
   <!-- Define some commonly used intertial properties  -->
   <xacro:macro name="box_inertia" params="m w h d">
@@ -61,18 +61,36 @@
     </collision>
 
     <xacro:box_inertia m="15" w="${base_width}" d="${base_length}" h="${base_height}"/>
+ <!--
+    <visual>
+      <geometry>
+        <sphere radius="${(wheel_radius+wheel_zoff-(base_height/2))}"/>
+      </geometry>
+      <material name="Cyan">
+        <color rgba="0 1.0 1.0 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${(wheel_radius+wheel_zoff-(base_height/2))}"/>
+      </geometry>
+    </collision>-->
+
+    <!--<xacro:sphere_inertia m="0.5" r="${(wheel_radius+wheel_zoff-(base_height/2))}"/>-->
   </link>
 
   <!-- Robot Footprint -->
-  <link name="base_footprint">
+  <!--<link name="base_footprint">
     <xacro:box_inertia m="0" w="0" d="0" h="0"/>
-  </link>
+  </link>-->
 
-  <joint name="base_joint" type="fixed">
+  <!--<joint name="base_joint" type="fixed">
     <parent link="base_footprint"/>
     <child link="base_link"/>
     <origin xyz="0.0 0.0 ${-(wheel_radius+wheel_zoff)}" rpy="0 0 0"/>
-  </joint>
+  </joint>-->
 
   <!-- Wheels -->
   <xacro:macro name="wheel" params="prefix x_reflect y_reflect">
@@ -102,6 +120,8 @@
       <child link="${prefix}_link"/>
       <origin xyz="${x_reflect*wheel_xoff} ${y_reflect*(base_width/2+wheel_ygap)} ${-wheel_zoff}" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
+    <!--<limit effort="10000" velocity="1000"/>
+    <joint_properties damping="1.0" friction="1.0"/> -->
     </joint>
   </xacro:macro>
 
@@ -126,7 +146,7 @@
     </collision>
 
     <xacro:sphere_inertia m="0.5" r="${(wheel_radius+wheel_zoff-(base_height/2))}"/>
-  </link>
+  </link>-->
 
   <joint name="caster_joint" type="fixed">
     <parent link="base_link"/>
@@ -160,7 +180,7 @@
     <sensor name="imu_sensor" type="imu">
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
         <ros>
-          <namespace>/demo</namespace>
+          <!--<namespace>/demo</namespace>-->
           <remapping>~/out:=imu</remapping>
         </ros>
         <initial_orientation_as_reference>false</initial_orientation_as_reference>
@@ -228,23 +248,23 @@
   <gazebo>
     <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
       <ros>
-        <namespace>/demo</namespace>
+        <!--<namespace>/demo</namespace>-->
 
       </ros>
 
-      <!-- wheels -->
+      
       <left_joint>drivewhl_l_joint</left_joint>
       <right_joint>drivewhl_r_joint</right_joint>
 
-      <!-- kinematics -->
+      
       <wheel_separation>0.025</wheel_separation>
       <wheel_diameter>0.2</wheel_diameter>
 
-      <!-- limits -->
+      
       <max_wheel_torque>20</max_wheel_torque>
       <max_wheel_acceleration>1.0</max_wheel_acceleration>
 
-      <!-- output -->
+      
       <publish_odom>true</publish_odom>
       <publish_odom_tf>true</publish_odom_tf>
       <publish_wheel_tf>true</publish_wheel_tf>
@@ -322,7 +342,7 @@
 
       <plugin name='laser' filename='libgazebo_ros_ray_sensor.so'>
         <ros>
-          <namespace>/demo</namespace>
+          <!--<namespace>/demo</namespace>-->
           <!-- tolto il remapping originale -->
           <remapping>~/out:=laser_scan</remapping>
         </ros>
