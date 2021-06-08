@@ -128,4 +128,4 @@ Currently the robot doesn't turn in smooth way maybe since its castor wheel has 
 # To Do
 1. Find a way to compute and store the distance between the robot and the current goal in order to send it to the ROS1 simulation.
 2. Avoid to place manually the robot position when we launch the Rviz node. 
-3. Implement a node that handle the robot-goal distance and sent this information ROS1 using the ros_bridge 
+3. Implement a node that handle the robot-goal distance and sent this information ROS1 using the ros_bridge.
