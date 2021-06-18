@@ -33,10 +33,10 @@ def generate_launch_description():
         arguments=['-d', LaunchConfiguration('rvizconfig')],
     )
     
-    gazebo = ExecuteProcess(
+    """"gazebo = ExecuteProcess(
             cmd=['gazebo', '--verbose', world, '-s', 'libgazebo_ros_init.so', 
             '-s', 'libgazebo_ros_factory.so'],
-            output='screen')
+            output='screen')"""
     
     spawn_entity = launch_ros.actions.Node(
     	package='gazebo_ros', 
@@ -65,7 +65,7 @@ def generate_launch_description():
         launch.actions.DeclareLaunchArgument(name='use_sim_time', default_value='True',
                                             description='Flag to enable use_sim_time'),
         launch.actions.ExecuteProcess(cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_factory.so'], output='screen'),
-        gazebo,
+        #gazebo,
         joint_state_publisher_node,
         robot_state_publisher_node,
         spawn_entity,
