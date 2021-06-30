@@ -1,17 +1,22 @@
 import launch
+from launch import action
+from ament_index_python import get_package_share_directory
 from launch.substitutions import Command, LaunchConfiguration
+#from launch.launch_description_sources import PythonLaunchDescriptionSource
 import launch_ros
 import os
-from launch.actions import ExecuteProcess
+## NEW
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import ExecuteProcess, IncludeLaunchDescription
 
 def generate_launch_description():
-    world_file_name = 'room.world'
+    #world_file_name = 'room.world'
 
     pkg_share = launch_ros.substitutions.FindPackageShare(package='sam_bot_description').find('sam_bot_description')
     default_model_path = os.path.join(pkg_share, 'src/description/sam_bot_description.urdf')
     default_rviz_config_path = os.path.join(pkg_share, 'rviz/urdf_config.rviz')
-    
-    world = os.path.join(pkg_share, 'worlds', world_file_name)
+    gazebo_dir = os.path.join(get_package_share_directory('gazebo_ros'), 'launch')
+    world = os.path.join(pkg_share, 'worlds', 'room.world')
 
     robot_state_publisher_node = launch_ros.actions.Node(
         package='robot_state_publisher',
@@ -25,18 +30,29 @@ def generate_launch_description():
         condition=launch.conditions.UnlessCondition(LaunchConfiguration('gui'))
     )
     
-    rviz_node = launch_ros.actions.Node(
-        package='rviz2',
-        executable='rviz2',
-        name='rviz2',
-        output='screen',
-        arguments=['-d', LaunchConfiguration('rvizconfig')],
-    )
+    #rviz_node = launch_ros.actions.Node(
+    #    package='rviz2',
+    #    executable='rviz2',
+    #    name='rviz2',
+    #    output='screen',
+    #    arguments=['-d', LaunchConfiguration('rvizconfig')],
+    #)
     
-    """"gazebo = ExecuteProcess(
-            cmd=['gazebo', '--verbose', world, '-s', 'libgazebo_ros_init.so', 
-            '-s', 'libgazebo_ros_factory.so'],
-            output='screen')"""
+    #gzclient = ExecuteProcess(
+    #    cmd=['killall', '-q', 'gzclient'],
+    #    output='screen'
+    #)
+
+    #gzserver = ExecuteProcess(
+    #    cmd=['killall', '-q', 'gzserver'],
+    #    output='screen'
+    #)
+
+
+    #gazebo = ExecuteProcess(
+    #        cmd=['gazebo', '--verbose', world, '-s', 'libgazebo_ros_init.so', 
+    #        '-s', 'libgazebo_ros_factory.so'],
+    #        output='screen')
     
     spawn_entity = launch_ros.actions.Node(
     	package='gazebo_ros', 
@@ -56,6 +72,24 @@ def generate_launch_description():
 
     
     return launch.LaunchDescription([
+
+        ExecuteProcess(
+            cmd=['killall','-q', 'gzserver'],
+            output='screen'),
+        ExecuteProcess(
+            cmd=['killall','-q', 'gzclient'],
+            output='screen'),
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([gazebo_dir, '/gzserver.launch.py']),
+            launch_arguments={
+                 'world': world
+                 }.items(),
+        ),
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([gazebo_dir ,'/gzclient.launch.py'])),
+
         launch.actions.DeclareLaunchArgument(name='gui', default_value='True',
                                             description='Flag to enable joint_state_publisher_gui'),
         launch.actions.DeclareLaunchArgument(name='model', default_value=default_model_path,
@@ -64,8 +98,10 @@ def generate_launch_description():
                                             description='Absolute path to rviz config file'),
         launch.actions.DeclareLaunchArgument(name='use_sim_time', default_value='True',
                                             description='Flag to enable use_sim_time'),
-        launch.actions.ExecuteProcess(cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_factory.so'], output='screen'),
+        #launch.actions.ExecuteProcess(cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_factory.so'], output='screen'),        
         #gazebo,
+        #gzclient,
+        #gzserver,
         joint_state_publisher_node,
         robot_state_publisher_node,
         spawn_entity,
