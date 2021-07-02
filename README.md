@@ -126,7 +126,11 @@ colcon build --symlink-install
   ```
     ros2 run rviz2 rviz2 -d $(ros2 pkg prefix nav2_bringup)/share/nav2_bringup/rviz/nav2_default_view.rviz
   ```
-  **Currently it's necessary to set the initial position of the model placing the _Intial 2d Pose_ over the map frame in Rviz. Then you can enable the robot model configuration in order to see the robot on Rviz.**
+  4. In a new terminal start a node that publish to the topic /initialpose in order tu define an initial estimated pose without using Rviz Tool.
+
+  ```
+    ros2 run sam_bot_descrition initPose.py
+  ```
    1. Finally you can set a goal position just placing the _Nav2d Goal_ Rviz graphic tool in the desired position. Or you can set it from another terminal using:
    ```
    ros2 topic pub /goal_pose geometry_msgs/PoseStamped "{header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}"
@@ -138,8 +142,9 @@ ros2 run tf2_ros tf2_echo <frame1> <frame2>  # to see the tf publications betwee
 ros2 run tf2_tools view_frames.py    # to build the frames tree 
 ```
 # Problems
-Currently the robot doesn't turn in smooth way maybe since its castor wheel has a fixed joint. So we still have to correct some model features.
+Il modello su rviz *blinka*
 # To Do
-1. Find a way to compute and store the distance between the robot and the current goal in order to send it to the ROS1 simulation.
-2. Avoid to place manually the robot position when we launch the Rviz node. 
-3. Implement a node that handle the robot-goal distance and sent this information ROS1 using the ros_bridge.
+1. Find a way to compute and store the distance between the robot and the current goal in order to send it to the ROS1 simulation. 
+2. Implement a node that handle the robot-goal distance and sent this information ROS1 using the ros_bridge.
+3. Unico launch (opzionale)
+4. Sistemare i parametri della navigazione soprattutto per la recovery mode

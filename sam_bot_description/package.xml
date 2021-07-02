@@ -7,10 +7,18 @@
   <maintainer email="jd.deleon@samsung.com">Josen Daniel De Leon</maintainer>
   <license>Apache 2.0</license>
 
+  <buildtool_depend>ament</buildtool_depend>
   <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_Cmake_python</buildtool_depend>
+  
+  <!-- <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>geomtry_msgs</depend>
+  <depend>tf</depend> -->
 
   <exec_depend>joint_state_publisher</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rclpy</exec_depend>
   <exec_depend>rviz</exec_depend>
   <exec_depend>xacro</exec_depend>
   <exec_depend>robot_localization</exec_depend>
