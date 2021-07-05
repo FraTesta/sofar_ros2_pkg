@@ -69,6 +69,11 @@ rosdep install -y -r -q --from-paths src --ignore-src --rosdistro foxy
 ```
 colcon build --symlink-install
 ```
+**Please Note** : If the command above does not work simply run:
+
+```
+colcon build 
+```
 ## Run 
 
 1. run the command to spawn the robot in gazebo: 
