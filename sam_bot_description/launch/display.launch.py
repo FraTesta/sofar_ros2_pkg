@@ -13,7 +13,8 @@ def generate_launch_description():
     #world_file_name = 'room.world'
 
     pkg_share = launch_ros.substitutions.FindPackageShare(package='sam_bot_description').find('sam_bot_description')
-    default_model_path = os.path.join(pkg_share, 'src/description/sam_bot_description.urdf')
+    #default_model_path = os.path.join(pkg_share, 'src/description/sam_bot_description.urdf')
+    default_model_path = os.path.join(pkg_share, 'src/description/round.urdf')
     default_rviz_config_path = os.path.join(pkg_share, 'rviz/urdf_config.rviz')
     gazebo_dir = os.path.join(get_package_share_directory('gazebo_ros'), 'launch')
     world = os.path.join(pkg_share, 'worlds', 'room.world')

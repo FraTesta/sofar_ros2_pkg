@@ -1,14 +1,14 @@
 amcl:
   ros__parameters:
     use_sim_time: True
-    alpha1: 0.2
-    alpha2: 0.2
-    alpha3: 0.2
-    alpha4: 0.2
-    alpha5: 0.2
-    base_frame_id: "base_link"
+    alpha1: 0.3
+    alpha2: 0.3
+    alpha3: 0.3
+    alpha4: 0.3
+    alpha5: 0.3
+    base_frame_id: "base_footprint"
     beam_skip_distance: 0.5
-    beam_skip_error_threshold: 0.9
+    beam_skip_error_threshold: 1
     beam_skip_threshold: 0.3
     do_beamskip: false
     global_frame_id: "map"
@@ -21,15 +21,15 @@ amcl:
     max_particles: 2000
     min_particles: 500
     odom_frame_id: "odom"
-    pf_err: 0.05
+    pf_err: 0.07 #0.05
     pf_z: 0.99
-    recovery_alpha_fast: 0.0
-    recovery_alpha_slow: 0.0
+    recovery_alpha_fast: 0.001
+    recovery_alpha_slow: 0.001
     resample_interval: 1
     robot_model_type: "differential"
     save_pose_rate: 0.5
     sigma_hit: 0.2
-    tf_broadcast: true
+    tf_broadcast: False
     transform_tolerance: 1.0
     update_min_a: 0.2
     update_min_d: 0.25
@@ -51,12 +51,13 @@ bt_navigator:
   ros__parameters:
     use_sim_time: True
     global_frame: map #map
-    robot_base_frame: base_link
-    odom_topic: /odom
+    robot_base_frame: base_footprint
+    odom_topic: odom
     enable_groot_monitoring: True
     groot_zmq_publisher_port: 1666
     groot_zmq_server_port: 1667
     transform_tolerance: 0.3 #default 0.1
+    bt_loop_duration: 15 #default 10
     default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
     plugin_lib_names:
     - nav2_compute_path_to_pose_action_bt_node
@@ -91,7 +92,7 @@ controller_server:
     use_sim_time: True
     controller_frequency: 10.0 #20.0
     min_x_velocity_threshold: 0.001
-    min_y_velocity_threshold: 0.5
+    min_y_velocity_threshold: 0.001
     min_theta_velocity_threshold: 0.001 #0.001
     progress_checker_plugin: "progress_checker"
     goal_checker_plugin: "goal_checker"
@@ -114,7 +115,7 @@ controller_server:
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 0.26
+      max_vel_x: 0.0
       max_vel_y: 0.0
       max_vel_theta: 10.0 # 1.0
       min_speed_xy: 0.0
@@ -122,7 +123,7 @@ controller_server:
       min_speed_theta: 5.0 #0.0
       # Add high threshold velocity for turtlebot 3 issue.
       # https://github.com/ROBOTIS-GIT/turtlebot3_simulations/issues/75
-      acc_lim_x: 2.5
+      acc_lim_x: 0.0 #2.5
       acc_lim_y: 0.0
       acc_lim_theta: 7.0 # 3.2
       decel_lim_x: -2.5
@@ -131,8 +132,9 @@ controller_server:
       vx_samples: 20
       vy_samples: 5
       vtheta_samples: 20
-      sim_time: 2.0 #1.7
-      linear_granularity: 0.05
+      sim_time: 2.5 #1.7
+      time_granularity: 0.5
+      linear_granularity: 0.5 #0.05
       angular_granularity: 0.025
       transform_tolerance: 0.4 # 0.2
       xy_goal_tolerance: 0.5 #0.25
@@ -148,31 +150,41 @@ controller_server:
       PathDist.scale: 32.0
       GoalDist.scale: 24.0
       RotateToGoal.scale: 32.0
-      RotateToGoal.slowing_factor: 3.0 #5.0
+      RotateToGoal.slowing_factor: 5.0
       RotateToGoal.lookahead_time: -1.0
 
 controller_server_rclcpp_node:
   ros__parameters:
     use_sim_time: True
 
-local_costmap:
-  local_costmap:
+global_costmap:
+  global_costmap:
     ros__parameters:
-      update_frequency: 5.0
-      publish_frequency: 2.0
-      global_frame: odom
-      robot_base_frame: base_link
+      footprint_padding: 0.3
+      update_frequency: 1.0
+      publish_frequency: 1.0
+      global_frame: map #prima map
+      robot_base_frame: base_footprint
       use_sim_time: True
-      rolling_window: true
-      width: 3
-      height: 3
-      resolution: 0.3 #0.05
-      robot_radius: 0.4 #0.22
-      plugins: ["voxel_layer", "inflation_layer"]
-      inflation_layer:
-        plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 0.55
+      robot_radius: 0.22
+      resolution: 0.05
+      track_unknown_space: true
+      plugins: ["obstacle_layer", "voxel_layer", "static_layer", "inflation_layer"]
+
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: True
+        observation_sources: scan
+        footprint_clearing_enabled: True
+        combination_method: 1
+        scan:
+          topic: /laser_scan
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: "LaserScan"
+          inf_is_valid: False
+      
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -183,56 +195,79 @@ local_costmap:
         max_obstacle_height: 2.0
         mark_threshold: 0
         observation_sources: scan
+        combination_method: 1
         scan:
           topic: /laser_scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True
           data_type: "LaserScan"
-      static_layer:
-        map_subscribe_transient_local: True
-      always_send_full_costmap: True
-  local_costmap_client:
-    ros__parameters:
-      use_sim_time: True
-  local_costmap_rclcpp_node:
-    ros__parameters:
-      use_sim_time: True
-
-global_costmap:
-  global_costmap:
-    ros__parameters:
-      update_frequency: 1.0
-      publish_frequency: 1.0
-      global_frame: map #prima map
-      robot_base_frame: base_link
-      use_sim_time: True
-      robot_radius: 0.22
-      resolution: 0.3 #0.05
-      track_unknown_space: true
-      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
-      obstacle_layer:
-        plugin: "nav2_costmap_2d::ObstacleLayer"
-        enabled: True
-        observation_sources: scan
-        scan:
-          topic: /laser_scan
-          max_obstacle_height: 2.0
-          clearing: True
-          marking: True
-          data_type: "LaserScan"
+          
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
+        enabled: True
+        transform_tolerance: 0.3
+
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
+        enabled: True
+        cost_scaling_factor: 1.0
         inflation_radius: 0.55
-      always_send_full_costmap: True
+        inflate_unknown: True
+        inflate_around_unknown: True
+
+      always_send_full_costmap: False #True
+
   global_costmap_client:
     ros__parameters:
       use_sim_time: True
   global_costmap_rclcpp_node:
+    ros__parameters:
+      use_sim_time: True
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      update_frequency: 5.0
+      publish_frequency: 2.0
+      global_frame: odom
+      robot_base_frame: base_footprint
+      use_sim_time: True
+      rolling_window: true
+      width: 3
+      height: 3
+      resolution: 0.03 #0.05
+      robot_radius: 0.4 #0.22
+      #plugins: ["voxel_layer", "inflation_layer"]
+      #inflation_layer:
+      #  plugin: "nav2_costmap_2d::InflationLayer"
+      #  cost_scaling_factor: 3.0
+      #  inflation_radius: 0.55
+      #voxel_layer:
+      #  plugin: "nav2_costmap_2d::VoxelLayer"
+      #  enabled: True
+      #  publish_voxel_map: True
+      #  origin_z: 0.0
+      #  z_resolution: 0.05
+      #  z_voxels: 16
+      #  max_obstacle_height: 2.0
+      #  mark_threshold: 0
+      #  observation_sources: scan
+      #  scan:
+      #    topic: /laser_scan
+      #    max_obstacle_height: 2.0
+      #    clearing: True
+      #    marking: True
+      #    data_type: "LaserScan"
+      #static_layer:
+      #  map_subscribe_transient_local: True
+      #always_send_full_costmap: True
+  
+  local_costmap_client:
+    ros__parameters:
+      use_sim_time: True
+  local_costmap_rclcpp_node:
     ros__parameters:
       use_sim_time: True
 
@@ -257,9 +292,9 @@ planner_server:
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"
-      tolerance: 0.5
-      use_astar: false
-      allow_unknown: true
+      use_astar: True
+      allow_unknown: True
+      tolerance: 1
 
 planner_server_rclcpp_node:
   ros__parameters:
@@ -278,7 +313,7 @@ recoveries_server:
     wait:
       plugin: "nav2_recoveries/Wait"
     global_frame: odom
-    robot_base_frame: base_link
+    robot_base_frame: base_footprint
     transform_timeout: 0.1
     use_sim_time: true
     simulate_ahead_time: 2.5 #2.0

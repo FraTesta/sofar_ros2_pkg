@@ -9,6 +9,7 @@ from rclpy.node import Node
 # Enables usage of the String message type
 from std_msgs.msg import String
 from geometry_msgs.msg import PoseWithCovarianceStamped
+
 from time import sleep
 
 class PosePublisher(Node):
@@ -52,7 +53,8 @@ class PosePublisher(Node):
 
     self.publisher_pose.publish(msg)
     self.get_logger().info('AO')
-    
+  
+  #def goal_publisher()
 
 def main(args=None):
 
