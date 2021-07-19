@@ -11,7 +11,7 @@ amcl:
     beam_skip_error_threshold: 0.9
     beam_skip_threshold: 0.3
     do_beamskip: false
-    global_frame_id: "map"
+    global_frame_id: "map" #map
     lambda_short: 0.1
     laser_likelihood_max_dist: 2.0
     laser_max_range: 100.0
@@ -50,7 +50,7 @@ amcl_rclcpp_node:
 bt_navigator:
   ros__parameters:
     use_sim_time: True
-    global_frame: map #map
+    global_frame: map
     robot_base_frame: base_link
     odom_topic: /odom
     enable_groot_monitoring: True
@@ -105,8 +105,8 @@ controller_server:
     # Goal checker parameters
     goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.5 #0.25
-      yaw_goal_tolerance: 0.5 #0.25
+      xy_goal_tolerance: 0.25
+      yaw_goal_tolerance: 0.25
       stateful: True
     # DWB parameters
     FollowPath:
@@ -116,7 +116,7 @@ controller_server:
       min_vel_y: 0.0
       max_vel_x: 0.26
       max_vel_y: 0.0
-      max_vel_theta: 10.0 # 1.0
+      max_vel_theta: 7.0 # 1.0
       min_speed_xy: 0.0
       max_speed_xy: 0.26
       min_speed_theta: 5.0 #0.0
@@ -135,8 +135,8 @@ controller_server:
       linear_granularity: 0.05
       angular_granularity: 0.025
       transform_tolerance: 0.4 # 0.2
-      xy_goal_tolerance: 0.5 #0.25
-      trans_stopped_velocity: 0.5 #0.25
+      xy_goal_tolerance: 0.25
+      trans_stopped_velocity: 0.25
       short_circuit_trajectory_evaluation: True
       stateful: True
       critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
@@ -148,7 +148,7 @@ controller_server:
       PathDist.scale: 32.0
       GoalDist.scale: 24.0
       RotateToGoal.scale: 32.0
-      RotateToGoal.slowing_factor: 3.0 #5.0
+      RotateToGoal.slowing_factor: 5.0
       RotateToGoal.lookahead_time: -1.0
 
 controller_server_rclcpp_node:
@@ -167,7 +167,7 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.3 #0.05
-      robot_radius: 0.4 #0.22
+      robot_radius: 0.3
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"

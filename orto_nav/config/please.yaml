@@ -11,7 +11,7 @@ amcl:
     beam_skip_error_threshold: 0.9
     beam_skip_threshold: 0.3
     do_beamskip: false
-    global_frame_id: "map"
+    global_frame_id: "odom" #"map"
     lambda_short: 0.1
     laser_likelihood_max_dist: 2.0
     laser_max_range: 100.0
@@ -129,7 +129,7 @@ controller_server:
       decel_lim_theta: -3.2
       vx_samples: 20
       vy_samples: 10 #5
-      vtheta_samples: 40 #20
+      vtheta_samples: 20
       sim_time: 4 #1.7
       linear_granularity: 0.05
       angular_granularity: 0.05 #0.025

@@ -136,6 +136,11 @@ colcon build
   ```
     ros2 run sam_bot_descrition initPose.py
   ```
+  > :bangbang: Se non viene trovato l'eseguibile dello script `initPose.py` modificare `CMakeLists.txt` (line 57) del pkg **sam_bot_description** nel seguente modo:
+  > ```
+  >install(PROGRAMS scripts/initPose.py DESTINATION lib/${PROJECT_NAME})
+  > ```
+
    1. Finally you can set a goal position just placing the _Nav2d Goal_ Rviz graphic tool in the desired position. Or you can set it from another terminal using:
    ```
    ros2 topic pub /goal_pose geometry_msgs/PoseStamped "{header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}"
