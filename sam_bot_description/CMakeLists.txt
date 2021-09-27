@@ -55,6 +55,7 @@ install(
 #install(PROGRAMS ${SCRIPT_FILES}
 #  DESTINATION lib/${PROJECT_NAME})
 install(PROGRAMS scripts/initPose.py DESTINATION bin)
+install(PROGRAMS scripts/initPose.py DESTINATION lib/${PROJECT_NAME})
 #install(TARGETS
 #  initialPose
 #  DESTINATION lib/${PROJECT_NAME})

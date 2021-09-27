@@ -1,7 +1,18 @@
-# ROS2_ortopillar
+# __ROS2_ortopillar__
+This repository contains all packages and files related to the ROS2 part of the __Banxter__ SOFAR project. Follow all the links to the sections of the repository description.
 
-# ROS 2 Foxy installation
-1. follow the tutorial : https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html
+## **Table Of Contents**
+  - [__ROS 2 Foxy installation__](#ros-2-foxy-installation)
+  - [__Ortopillar packages installation__](#ortopillar-packages-installation)
+  - [__Navigation2 installation__](#navigation2-installation)
+  - [__Project Execution__ ](#project-execution)
+    - [__Map Generation__](#map-generation)
+    - [__Launch Navigation__](#launch-navigation)
+  
+
+## __ROS 2 Foxy installation__
+This section explain you how to properly install ROS2 Foxy on your Ubuntu 20 machine.  
+1. Follow the tutorial: https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html
 2. install also the following dependencies:
 ```
 sudo apt update && sudo apt install -y \
@@ -47,11 +58,10 @@ sudo apt install --no-install-recommends -y \
 
    ```
 
-# Ortopillar_packages
+## __Ortopillar packages installation__
 
-Currently the model of the ortopillar is defined in the _sam_bot_description_ package, which contains the xacro model and the localization_robot definition. This last one provides the transformations needed w.r.t. the odom frame and an ekf for the odometry.
-1. clone this pkgs into your ros 2 workspace
-
+Currently the model of the ortopillar is defined in the __sam_bot_description__ package, which contains the model description (SDF and URDF) and the __localization_robot__ script. This last script provides all the transformations needed w.r.t. the odom frame and an EKF for the odometry estimation.
+1. Clone this pkgs into your ros 2 workspace
 2. install: 
    ```
    pip3 install xacro
@@ -74,7 +84,7 @@ colcon build --symlink-install
 ```
 colcon build 
 ```
-## Run 
+### Run 
 
 1. run the command to spawn the robot in gazebo: 
    ```
@@ -83,7 +93,8 @@ colcon build
 
 2.  in another shell type < rviz2 > and load the configuration or create a new one.
 
-# Nav2 installation
+
+## __Navigation2 installation__
   The Navigation2 package provides several tools for the autonomous navigation. But it needs a slam package to build a map to use in its navigation algorithm.
   Therefore install the slam toolbox and navigation2 packages:
   ```
@@ -96,8 +107,8 @@ colcon build
 
   ```
 
-   ## Run 
-   ### Map Generation
+   ## __Project Execution__ 
+   ### __Map Generation__
    As already said first of all we need to build a map to send to the navigation2, thus use the following commands to crate the map of the provided world. Please notice that a map is already provided in the map directory of the nav2_bringup pkg so you can skip the following commands and go to the _Launch_Navigation_.
 
    1. launch the ortopillar simulation:
@@ -116,7 +127,7 @@ colcon build
   ```
    ros2 run nav2_map_server map_saver_cli -f /home/<username>/<workspace_name>/src/navigation2/nav2_bringup/bringup/maps/map
    ```
-   ### Launch Navigation
+   ### __Launch Navigation__
 
    1. launch the ortopillar simulation:
    ```
