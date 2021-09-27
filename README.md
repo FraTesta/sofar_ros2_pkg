@@ -1,3 +1,4 @@
+![Unige Logo](https://raw.githubusercontent.com/FraTesta/sofar_ros2_pkg/Pic/unige_stemma.png)
 # __ROS2_ortopillar__
 This repository contains all packages and files related to the ROS2 part of the __Banxter__ SOFAR project. Follow all the links to the sections of the repository description.
 
@@ -62,7 +63,7 @@ sudo apt install --no-install-recommends -y \
 
 Currently the model of the ortopillar is defined in the __sam_bot_description__ package, which contains the model description (SDF and URDF) and the __localization_robot__ script. This last script provides all the transformations needed w.r.t. the odom frame and an EKF for the odometry estimation.
 1. Clone this pkgs into your ros 2 workspace
-2. install: 
+2. Install: 
    ```
    pip3 install xacro
    sudo apt install ros-foxy-xacro
@@ -86,12 +87,15 @@ colcon build
 ```
 ### Run 
 
-1. run the command to spawn the robot in gazebo: 
+1. Run the command to spawn the robot in gazebo: 
    ```
    ros2 launch sam_bot_description display.launch.py 
    ```
 
-2.  in another shell type < rviz2 > and load the configuration or create a new one.
+2.  In another shell type <rviz2> and load the configuration or create a new one.
+
+You should see the following simulated environement on Gazebo
+![Unige Logo](https://raw.githubusercontent.com/FraTesta/sofar_ros2_pkg/Pic/robotModel.png)
 
 
 ## __Navigation2 installation__
@@ -104,14 +108,14 @@ colcon build
   ```
   Since the navigation2 pkg requires the setting of several configuration file in order to adapt the application to a custom robot, it's necessary to build the navigation2 pkg that we have provided in this project using the following commands: 
    ```
-
+  colcon build
   ```
 
    ## __Project Execution__ 
    ### __Map Generation__
-   As already said first of all we need to build a map to send to the navigation2, thus use the following commands to crate the map of the provided world. Please notice that a map is already provided in the map directory of the nav2_bringup pkg so you can skip the following commands and go to the _Launch_Navigation_.
+   As already mantioned, first of all we need to build a map to send to the navigation2 nodes, thus use the following commands to generate a map of the provided simulation world. __Please notice that a map is already provided in the map folder of the _nav2_bringup_ pkg, so you can skip the following steps and go to the _Launch_Navigation_ section__ !!!.
 
-   1. launch the ortopillar simulation:
+   1. Launch the ortopillar simulation:
    ```
    ros2 launch sam_bot_description display.launch.py
    ```
@@ -119,22 +123,22 @@ colcon build
    ```
    ros2 launch orto_nav slam.launch.py
    ```
-   3. In the final terminal (__sourced__) launch the teleop in order to drive the robot and build the whole map :
+   3. In the final terminal (__sourced__) launch the teleoperation node in order to drive the robot and build the whole map:
    ```
    ros2 run teleop_twist_keyboard teleop_twist_keyboard
    ```
-   4. Save the map (il primo comando la salva nella WS con il secondo dovrebbe salvarla in nav2_bringup)
+   4. Save the map in the proper foulder. __Remember to change the path with your folders__.
   ```
    ros2 run nav2_map_server map_saver_cli -f /home/<username>/<workspace_name>/src/navigation2/nav2_bringup/bringup/maps/map
    ```
    ### __Launch Navigation__
 
-   1. launch the ortopillar simulation:
+   1. Launch the ortopillar simulation:
    ```
    ros2 launch sam_bot_description display.launch.py
    ```
 
-   2. Launch the navigation nodes
+   2. Launch the navigation nodes loading the map as well. __Remember to change the path with your folders__.
    ```
    ros2 launch orto_nav bringup_launch.py use_sim_time:=True autostart:=True \map:=/home/<username>/<workspace_name>/src/orto_nav/maps/map.yaml
    ```
@@ -142,17 +146,17 @@ colcon build
   ```
     ros2 run rviz2 rviz2 -d $(ros2 pkg prefix nav2_bringup)/share/nav2_bringup/rviz/nav2_default_view.rviz
   ```
-  4. In a new terminal start a node that publish to the topic /initialpose in order tu define an initial estimated pose without using Rviz Tool.
+  4. In a new terminal start a node that publish to the topic /initialpose the current position of the robot.
 
   ```
-    ros2 run sam_bot_descrition initPose.py
+    ros2 run sam_bot_description initPose.py
   ```
   > :bangbang: Se non viene trovato l'eseguibile dello script `initPose.py` modificare `CMakeLists.txt` (line 57) del pkg **sam_bot_description** nel seguente modo:
   > ```
   >install(PROGRAMS scripts/initPose.py DESTINATION lib/${PROJECT_NAME})
   > ```
 
-   1. Finally you can set a goal position just placing the _Nav2d Goal_ Rviz graphic tool in the desired position. Or you can set it from another terminal using:
+   5. Finally you can send a goal position just placing the _Nav2d Goal_ Rviz graphic tool in the desired position. Or you can send it from another sourced terminal using:
    ```
    ros2 topic pub /goal_pose geometry_msgs/PoseStamped "{header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}"
    ```
@@ -162,10 +166,19 @@ colcon build
 ros2 run tf2_ros tf2_echo <frame1> <frame2>  # to see the tf publications between two frames
 ros2 run tf2_tools view_frames.py    # to build the frames tree 
 ```
-# Problems
-Il modello su rviz *blinka*
+
 # To Do
 1. Find a way to compute and store the distance between the robot and the current goal in order to send it to the ROS1 simulation. 
 2. Implement a node that handle the robot-goal distance and sent this information ROS1 using the ros_bridge.
 3. Unico launch (opzionale)
-4. Sistemare i parametri della navigazione soprattutto per la recovery mode
+
+## __Autors and Contacts__
+Roberto Albanese 
+
+Luca Covizzi
+
+Chiara Terrile 
+
+Francesco Testa   francesco.testa.ge@gmail.com
+
+Andrea Tiranti    andrea.tiranti97@gmail.com
