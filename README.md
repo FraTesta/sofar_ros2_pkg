@@ -1,4 +1,4 @@
-![Unige Logo](https://raw.githubusercontent.com/FraTesta/sofar_ros2_pkg/blob/main/Pic/unige_stemma.png)
+![Unige Logo](https://github.com/FraTesta/sofar_ros2_pkg/blob/main/Pic/unige_stemma.png)
 # __ROS2_ortopillar__
 This repository contains all packages and files related to the ROS2 part of the __Banxter__ SOFAR project. Follow all the links to the sections of the repository description.
 
@@ -162,7 +162,7 @@ You should see the following simulated environement on Gazebo
    ros2 topic pub /goal_pose geometry_msgs/PoseStamped "{header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}"
    ```
   At the end, you should see the generated path as shown in the following figure
-    ![Navigation ](https://raw.githubusercontent.com/FraTesta/sofar_ros2_pkg/blob/main/Pic/navigationPath.png)
+    ![Navigation ](https://github.com/FraTesta/sofar_ros2_pkg/blob/main/Pic/navigationPath.png)
 
 # Useful Commands
 ```
