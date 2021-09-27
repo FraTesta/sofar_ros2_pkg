@@ -96,7 +96,7 @@ colcon build
 
 You should see the following simulated environement on Gazebo
 
-![Robot Model](https://raw.githubusercontent.com/FraTesta/sofar_ros2_pkg/blob/main/Pic/robotModel.png)
+![Robot Model](https://github.com/FraTesta/sofar_ros2_pkg/blob/main/Pic/robotModel.png)
 
 
 ## __Navigation2 installation__
