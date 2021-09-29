@@ -176,12 +176,16 @@ ros2 run tf2_tools view_frames.py    # to build the frames tree
 3. Unico launch (opzionale)
 
 ## __Autors and Contacts__
-Roberto Albanese 
+Roberto Albanese ralbanese18@gmail.com
 
-Luca Covizzi
+Luca Covizzi luca@francocovizzi.it
 
-Chiara Terrile 
+Chiara Terrile chiaraterrile97@gmail.com
+
+Gabriele Reverberi s3665543@studenti.unige.it
 
 Francesco Testa   francesco.testa.ge@gmail.com
 
 Andrea Tiranti    andrea.tiranti97@gmail.com
+  
+Riccardo Lastrico riky.lastrico@gmail.com
