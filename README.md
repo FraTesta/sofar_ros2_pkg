@@ -187,5 +187,7 @@ Gabriele Reverberi s3665543@studenti.unige.it
 Francesco Testa   francesco.testa.ge@gmail.com
 
 Andrea Tiranti    andrea.tiranti97@gmail.com
+
+Geraldo Margjini  Geraldomargjini@gmail.com
   
 Riccardo Lastrico riky.lastrico@gmail.com
